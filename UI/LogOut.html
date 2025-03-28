@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Logout Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .logout-modal {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(-10deg);
+            transition: all 0.4s ease;
+        }
+
+        .logout-modal:hover {
+            transform: perspective(1000px) rotateX(0);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .logout-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, #6a11cb, #2575fc);
+            transform: rotate(-45deg);
+            z-index: -1;
+        }
+
+        .logout-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(37, 117, 252, 0.3);
+        }
+
+        .logout-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .logout-title {
+            color: black;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .logout-subtitle {
+            color: black;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .logout-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+        }
+
+        .btn-cancel {
+            background: #f0f3f7;
+            color: black;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e4ea;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-modal">
+        <div class="logout-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M16 17l5-5-5-5M21 12H9M13 22a10 10 0 1 1 0-20"/>
+            </svg>
+        </div>
+        <h2 class="logout-title">Log Out</h2>
+        <p class="logout-subtitle">Are you sure you want to log out of your account? You'll need to sign in again to continue.</p>
+        <div class="logout-buttons">
+            <button class="btn btn-logout">Log Out</button>
+            <button class="btn btn-cancel">Cancel</button>
+        </div>
+    </div>
+</body>
+</html>
