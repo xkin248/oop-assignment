@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .scanner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            border: 2px solid cyan;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+        .scanner-overlay::before,
+        .scanner-overlay::after {
+            content: '';
+            position: absolute;
+            background: cyan;
+        }
+        .scanner-overlay::before {
+            top: -10px;
+            left: -10px;
+            width: 20px;
+            height: 2px;
+        }
+        .scanner-overlay::after {
+            top: -10px;
+            left: -10px;
+            width: 2px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <div class="relative h-screen w-full">
+        <!-- Camera View -->
+        <video 
+            id="scanner-video" 
+            class="absolute top-0 left-0 w-full h-full object-cover"
+            playsinline
+        ></video>
+
+        <!-- Scanner Overlay -->
+        <div class="scanner-overlay"></div>
+
+        <!-- Top Navigation -->
+        <div class="absolute top-0 left-0 right-0 p-4 flex justify-between">
+            <button class="bg-white/20 rounded-full p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="bg-white/20 rounded-full p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v10l4-4m-4 4l-4-4m11 8v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2zm-7-9V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="absolute bottom-0 left-0 right-0 p-4">
+            <div class="bg-white/20 rounded-full p-2 text-center">
+                <button onclick="scanFromGallery()" class="text-white">
+                    Scan From Gallery
+                </button>
+            </div>
+        </div>
+
+        <!-- Instruction Text -->
+        <div class="absolute bottom-20 left-0 right-0 text-center">
+            <p class="text-white bg-black/50 px-4 py-2 inline-block rounded">
+                Please code inside the box
+            </p>
+        </div>
+    </div>
+
+    <input 
+        type="file" 
+        id="gallery-input" 
+        accept="image/*" 
+        class="hidden"
+    />
+
+    <script>
+        // Camera Access
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { 
+                        facingMode: "environment" 
+                    }
+                });
+                const video = document.getElementById('scanner-video');
+                video.srcObject = stream;
+                video.play();
+            } catch (error) {
+                console.error('Camera access error:', error);
+                alert('Unable to access camera');
+            }
+        }
+
+        // Gallery Image Scanner
+        function scanFromGallery() {
+            document.getElementById('gallery-input').click();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', startCamera);
+
+        // Gallery image processing
+        document.getElementById('gallery-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // TODO: Implement QR code detection for uploaded image
+                console.log('Image uploaded:', e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
