@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg w-96 p-6">
+        <div class="flex justify-start mb-4">
+            <button class="text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+        </div>
+        
+        <div class="text-center mb-6">
+            <div class="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden border-2 border-gray-200 relative">
+                <img id="profileImage" src="/api/placeholder/96/96" alt="Profile" class="w-full h-full object-cover">
+                <input type="file" id="imageUpload" accept="image/*" class="hidden">
+                <label for="imageUpload" class="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                </label>
+            </div>
+            <input 
+                type="text" 
+                id="nameInput" 
+                value="Please Enter Your Full Name" 
+                class="text-xl font-semibold text-center w-full bg-transparent border-b border-transparent hover:border-gray-300 focus:outline-none focus:border-blue-500"
+            >
+        </div>
+        
+        <form id="visitorForm" class="space-y-4">
+            <div>
+                <label class="block text-gray-600 text-sm mb-1">Phone No</label>
+                <input 
+                    type="tel" 
+                    id="phoneInput" 
+                    value="Enter Your Phone Number" 
+                    class="w-full p-2 border rounded-md bg-white focus:ring-2 focus:ring-blue-200 transition"
+                >
+            </div>
+            
+            <div>
+                <label class="block text-gray-600 text-sm mb-1">Email</label>
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    value="Enter Email" 
+                    class="w-full p-2 border rounded-md bg-white focus:ring-2 focus:ring-blue-200 transition"
+                >
+            </div>
+            
+            <div>
+                <label class="block text-gray-600 text-sm mb-1">Passport ID</label>
+                <input 
+                    type="text" 
+                    id="passportInput" 
+                    value="Enter your Passport No" 
+                    class="w-full p-2 border rounded-md bg-white focus:ring-2 focus:ring-blue-200 transition"
+                >
+            </div>
+            
+            <div>
+                <label class="block text-gray-600 text-sm mb-1">Purpose</label>
+                <textarea 
+                    id="purposeInput" 
+                    class="w-full p-2 border rounded-md bg-white focus:ring-2 focus:ring-blue-200 transition"
+                >Reason why you come to here.</textarea>
+            </div>
+            
+            <div class="mt-6 flex space-x-4">
+                <button 
+                    type="button" 
+                    id="cancelBtn" 
+                    class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-300"
+                >
+                    Cancel
+                </button>
+                <button 
+                    type="submit" 
+                    id="saveBtn" 
+                    class="flex-1 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('visitorForm');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const imageUpload = document.getElementById('imageUpload');
+            const profileImage = document.getElementById('profileImage');
+            const inputs = form.querySelectorAll('input, textarea');
+
+            // Image Upload Functionality
+            imageUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        profileImage.src = event.target.result;
+                        saveBtn.disabled = false;
+                        saveBtn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Enable/disable save button based on changes
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+                });
+            });
+
+            // Cancel editing
+            cancelBtn.addEventListener('click', () => {
+                inputs.forEach(input => {
+                    input.value = input.defaultValue;
+                });
+                profileImage.src = '/api/placeholder/96/96';
+                saveBtn.disabled = true;
+                saveBtn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+            });
+
+            // Form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = {
+                    name: document.getElementById('nameInput').value,
+                    phone: document.getElementById('phoneInput').value,
+                    email: document.getElementById('emailInput').value,
+                    passportId: document.getElementById('passportInput').value,
+                    purpose: document.getElementById('purposeInput').value,
+                    profileImage: profileImage.src
+                };
+
+                // Simulate save process (replace with actual save logic)
+                console.log('Saving visitor data:', formData);
+                alert('Visitor information saved successfully!');
+                
+                // Disable save button after saving
+                saveBtn.disabled = true;
+                saveBtn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+            });
+
+            // Initially disable save button
+            saveBtn.disabled = true;
+            saveBtn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+        });
+    </script>
+</body>
+</html>
