@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal QR Code Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-96">
+        <div class="text-center mb-4">
+            <div class="flex items-center justify-center mb-4">
+                <img 
+                    id="profileImage" 
+                    src="/api/placeholder/120/120" 
+                    alt="Profile" 
+                    class="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
+                />
+            </div>
+            <h2 id="visitorName" class="text-xl font-semibold mb-2"></h2>
+            <div 
+                id="qrcode" 
+                class="flex items-center justify-center mb-4"
+            ></div>
+            <button 
+                onclick="generatePersonalQRCode()" 
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+                Generate Personal QR Code
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Visitor Details Function
+        function getVisitorDetails() {
+            // This is a mock function. In a real application, this would 
+            // typically be an API call or database lookup
+            return {
+                name: "Jason Ting Li Hui",
+                profilePicture: "/api/placeholder/120/120", // Replace with actual profile picture path
+                contactInfo: "https://contact.example.com/jasonting",
+                employeeId: "ET12345",
+                department: "Engineering"
+            };
+        }
+
+        // QR Code Generation Function
+        function generatePersonalQRCode() {
+            // Get visitor details
+            const visitorInfo = getVisitorDetails();
+            
+            // Update profile image
+            const profileImage = document.getElementById('profileImage');
+            profileImage.src = visitorInfo.profilePicture;
+            
+            // Update visitor name
+            const nameElement = document.getElementById('visitorName');
+            nameElement.textContent = visitorInfo.name;
+            
+            // Prepare QR code content
+            const qrCodeContent = JSON.stringify({
+                name: visitorInfo.name,
+                employeeId: visitorInfo.employeeId,
+                department: visitorInfo.department,
+                contactInfo: visitorInfo.contactInfo
+            });
+            
+            // Clear previous QR code
+            const qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = '';
+            
+            // Generate new QR code
+            new QRCode(qrcodeContainer, {
+                text: qrCodeContent,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        // Generate QR code on page load
+        document.addEventListener('DOMContentLoaded', generatePersonalQRCode);
+    </script>
+</body>
+</html>
