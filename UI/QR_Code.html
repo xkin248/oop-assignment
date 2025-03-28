@@ -22,23 +22,51 @@
                 id="qrcode" 
                 class="flex items-center justify-center mb-4"
             ></div>
-            <button 
-                onclick="generatePersonalQRCode()" 
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            <div class="space-y-2">
+                <button 
+                    onclick="generatePersonalQRCode()" 
+                    class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Generate Personal QR Code
+                </button>
+                <button 
+                    onclick="openQRScanner()" 
+                    class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                    Scan QR Code
+                </button>
+            </div>
+            
+            <!-- QR Scanner Modal -->
+            <div 
+                id="qrScannerModal" 
+                class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center"
             >
-                Generate Personal QR Code
-            </button>
+                <div class="bg-white p-6 rounded-lg w-80 relative">
+                    <button 
+                        onclick="closeQRScanner()" 
+                        class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                    >
+                        ✕
+                    </button>
+                    <h3 class="text-xl font-semibold mb-4">Scan QR Code</h3>
+                    <video 
+                        id="qrScannerVideo" 
+                        class="w-full mb-4 rounded"
+                    ></video>
+                    <div id="qrScanResult" class="mt-4 text-center"></div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <script>
         // Visitor Details Function
         function getVisitorDetails() {
-            // This is a mock function. In a real application, this would 
-            // typically be an API call or database lookup
             return {
                 name: "Jason Ting Li Hui",
-                profilePicture: "/api/placeholder/120/120", // Replace with actual profile picture path
+                profilePicture: "/api/placeholder/120/120",
                 contactInfo: "https://contact.example.com/jasonting",
                 employeeId: "ET12345",
                 department: "Engineering"
@@ -47,18 +75,14 @@
 
         // QR Code Generation Function
         function generatePersonalQRCode() {
-            // Get visitor details
             const visitorInfo = getVisitorDetails();
             
-            // Update profile image
             const profileImage = document.getElementById('profileImage');
             profileImage.src = visitorInfo.profilePicture;
             
-            // Update visitor name
             const nameElement = document.getElementById('visitorName');
             nameElement.textContent = visitorInfo.name;
             
-            // Prepare QR code content
             const qrCodeContent = JSON.stringify({
                 name: visitorInfo.name,
                 employeeId: visitorInfo.employeeId,
@@ -66,11 +90,9 @@
                 contactInfo: visitorInfo.contactInfo
             });
             
-            // Clear previous QR code
             const qrcodeContainer = document.getElementById('qrcode');
             qrcodeContainer.innerHTML = '';
             
-            // Generate new QR code
             new QRCode(qrcodeContainer, {
                 text: qrCodeContent,
                 width: 200,
@@ -79,6 +101,77 @@
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
             });
+        }
+
+        // QR Scanner Functions
+        function openQRScanner() {
+            const modal = document.getElementById('qrScannerModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Access device camera
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(function(stream) {
+                    const video = document.getElementById('qrScannerVideo');
+                    video.srcObject = stream;
+                    video.setAttribute("playsinline", true);
+                    video.play();
+                    requestAnimationFrame(tick);
+                })
+                .catch(function(err) {
+                    console.error("Error accessing camera: ", err);
+                    alert("Unable to access camera. Please ensure camera permissions are granted.");
+                });
+        }
+
+        function closeQRScanner() {
+            const modal = document.getElementById('qrScannerModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            
+            // Stop camera stream
+            const video = document.getElementById('qrScannerVideo');
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+
+        function tick() {
+            const video = document.getElementById('qrScannerVideo');
+            const canvas = document.createElement('canvas');
+            const resultElement = document.getElementById('qrScanResult');
+            
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                const imageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+                
+                if (code) {
+                    try {
+                        const parsedData = JSON.parse(code.data);
+                        resultElement.innerHTML = `
+                            <p><strong>Name:</strong> ${parsedData.name}</p>
+                            <p><strong>Employee ID:</strong> ${parsedData.employeeId}</p>
+                            <p><strong>Department:</strong> ${parsedData.department}</p>
+                        `;
+                    } catch (error) {
+                        resultElement.textContent = "Invalid QR Code Format";
+                    }
+                } else {
+                    resultElement.textContent = "No QR Code Detected";
+                }
+            }
+            
+            // Continue scanning if modal is open
+            const modal = document.getElementById('qrScannerModal');
+            if (!modal.classList.contains('hidden')) {
+                requestAnimationFrame(tick);
+            }
         }
 
         // Generate QR code on page load
