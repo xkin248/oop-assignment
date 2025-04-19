@@ -60,14 +60,20 @@
         .forgot-password:hover {
             color: #3730a3;
         }
+        .error-message {
+            color: #b91c1c;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <div class="form-header">Welcome Back!</div>
-        <form>
-            <input type="email" placeholder="Email" class="input-field" required>
-            <input type="password" placeholder="Password" class="input-field" required>
+        <form onsubmit="handleSignIn(event)">
+            <input type="email" placeholder="Email" class="input-field" id="email" required>
+            <input type="password" placeholder="Password" class="input-field" id="password" required>
             
             <div class="flex justify-between items-center mb-4">
                 <label class="flex items-center text-gray-600 text-sm">
@@ -83,6 +89,42 @@
         <div class="text-center mt-4 text-gray-600">
             Don't have an account? <a href="register.html" class="forgot-password">Sign Up</a>
         </div>
+        <div id="error-message" class="error-message"></div>
     </div>
+
+    <script>
+        async function handleSignIn(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                // Simulated API call to check account in the database
+                const response = await fetch('/api/validate-account', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.hasAccount) {
+                    // Redirect to dashboard if account exists
+                    window.location.href = "main_dashboard.html";
+                } else {
+                    // Show error message if account doesn't exist
+                    const errorMessage = document.getElementById("error-message");
+                    errorMessage.textContent = "Please create an account.";
+                }
+            } catch (error) {
+                console.error("Error validating account:", error);
+                const errorMessage = document.getElementById("error-message");
+                errorMessage.textContent = "An error occurred. Please try again later.";
+            }
+        }
+    </script>
 </body>
 </html>
