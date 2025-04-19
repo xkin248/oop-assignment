@@ -14,61 +14,23 @@
         
         body {
             background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-        }
-        
-        .phone-container {
-            width: 360px;
-            height: 720px;
-            border-radius: 30px;
-            overflow: hidden;
-            position: relative;
-            background-color: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 20px;
-            background-color: #f7f4fa;
-        }
-        
-        .time {
-            font-weight: 500;
-        }
-        
-        .status-icons {
-            display: flex;
-            gap: 4px;
-        }
-        
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            background-color: #333;
-            border-radius: 50%;
-        }
-        
-        .status-battery, .status-signal {
-            width: 18px;
-            height: 12px;
-            background-color: #ddd;
-            border-radius: 2px;
+            margin: 0;
+            padding: 0;
         }
         
         .header {
             display: flex;
             align-items: center;
             padding: 16px 20px;
+            background-color: #f7f4fa;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .back-button {
             margin-right: 12px;
             color: #333;
+            cursor: pointer;
         }
         
         .title {
@@ -89,6 +51,7 @@
             padding: 12px;
             text-align: center;
             font-size: 14px;
+            cursor: pointer;
         }
         
         .tab.active {
@@ -100,13 +63,15 @@
         .new-appointment-btn {
             display: inline-flex;
             align-items: center;
-            margin: 8px 0 16px 20px;
+            margin: 8px 20px 16px;
             padding: 12px 20px;
             background-color: #f0eaf5;
             border-radius: 20px;
             font-size: 14px;
             color: #6c5a9e;
             font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
         }
         
         .edit-icon {
@@ -121,6 +86,10 @@
         
         .appointment-card {
             margin: 12px 20px;
+            background-color: white;
+            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .appointment-title {
@@ -142,104 +111,63 @@
         .section-value {
             font-size: 16px;
         }
-        
-        .confirmed-badge {
-            position: absolute;
-            top: 300px;
-            right: 20px;
-            background-color: #6c5a9e;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .bottom-bar {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30%;
-            height: 5px;
-            background-color: #000;
-            border-radius: 3px;
-            opacity: 0.2;
-        }
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="time">9:30</span>
-            <div class="status-center">
-                <div class="status-dot"></div>
-            </div>
-            <div class="status-icons">
-                <div class="status-signal"></div>
-                <div class="status-battery"></div>
-            </div>
+    <div class="header">
+        <div class="back-button" onclick="history.back()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.5 19L8.5 12L15.5 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1 class="title">Appointment</h1>
+    </div>
+    
+    <div class="tab-container">
+        <div class="tab active">
+            <span>✓ Upcoming</span>
+        </div>
+        <div class="tab" onclick="location.href='AS_HistoryAppointment.html'">
+            <span>Past Appointment</span>
+        </div>
+    </div>
+    
+    <a class="new-appointment-btn" href="Add_New_Appointment.html">
+        <div class="edit-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 3C17.2626 2.73735 17.5744 2.52901 17.9176 2.38687C18.2608 2.24473 18.6286 2.17157 19 2.17157C19.3714 2.17157 19.7392 2.24473 20.0824 2.38687C20.4256 2.52901 20.7374 2.73735 21 3C21.2626 3.26264 21.471 3.57444 21.6131 3.9176C21.7553 4.26077 21.8284 4.62856 21.8284 5C21.8284 5.37143 21.7553 5.73923 21.6131 6.08239C21.471 6.42555 21.2626 6.73735 21 7L7.5 20.5L2 22L3.5 16.5L17 3Z" stroke="#6c5a9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <span>New Appointment</span>
+    </a>
+    
+    <div class="appointment-card">
+        <h2 class="appointment-title">Sibu - Kuching</h2>
+        
+        <div class="appointment-section">
+            <div class="section-label">Date & Time</div>
+            <div class="section-value">25 March 2025 · 2:00 PM - 3:00PM</div>
         </div>
         
-        <div class="header">
-            <div class="back-button">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.5 19L8.5 12L15.5 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <h1 class="title">Appointment</h1>
+        <div class="appointment-section">
+            <div class="section-label">Location</div>
+            <div class="section-value">Kuching</div>
         </div>
         
-        <div class="tab-container">
-            <div class="tab active">
-                <span>✓ Upcoming</span>
-            </div>
-            <div class="tab">
-                <span>Past Appointment</span>
-            </div>
+        <div class="appointment-section">
+            <div class="section-label">Name</div>
+            <div class="section-value">Jason Ting Li Hui</div>
         </div>
         
-        <div class="new-appointment-btn">
-            <div class="edit-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 3C17.2626 2.73735 17.5744 2.52901 17.9176 2.38687C18.2608 2.24473 18.6286 2.17157 19 2.17157C19.3714 2.17157 19.7392 2.24473 20.0824 2.38687C20.4256 2.52901 20.7374 2.73735 21 3C21.2626 3.26264 21.471 3.57444 21.6131 3.9176C21.7553 4.26077 21.8284 4.62856 21.8284 5C21.8284 5.37143 21.7553 5.73923 21.6131 6.08239C21.471 6.42555 21.2626 6.73735 21 7L7.5 20.5L2 22L3.5 16.5L17 3Z" stroke="#6c5a9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <span>New Appointment</span>
+        <div class="appointment-section">
+            <div class="section-label">NRIC:</div>
+            <div class="section-value">060542-13-5646</div>
         </div>
         
-        <div class="appointment-card">
-            <h2 class="appointment-title">Sibu - Kuching</h2>
-            
-            <div class="appointment-section">
-                <div class="section-label">Date & Time</div>
-                <div class="section-value">25 March 2025 · 2:00 PM - 3:00PM</div>
-            </div>
-            
-            <div class="appointment-section">
-                <div class="section-label">Location</div>
-                <div class="section-value">Kuching</div>
-            </div>
-            
-            <div class="appointment-section">
-                <div class="section-label">Name</div>
-                <div class="section-value">Jason Ting Li Hui</div>
-            </div>
-            
-            <div class="appointment-section">
-                <div class="section-label">NRIC:</div>
-                <div class="section-value">060542-13-5646</div>
-            </div>
-            
-            <div class="appointment-section">
-                <div class="section-label">Seat</div>
-                <div class="section-value">N12</div>
-            </div>
+        <div class="appointment-section">
+            <div class="section-label">Seat</div>
+            <div class="section-value">N12</div>
         </div>
-        
-        <div class="confirmed-badge">Confirmed</div>
-        
-        <div class="bottom-bar"></div>
     </div>
 </body>
 </html>
