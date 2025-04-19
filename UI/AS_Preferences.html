@@ -17,6 +17,32 @@
             const body = document.body;
             body.classList.remove('light-theme', 'dark-theme', 'custom-theme');
             body.classList.add(`${theme.toLowerCase()}-theme`);
+
+            // Additional changes for dark theme
+            const backButton = document.getElementById("backButton");
+            if (theme.toLowerCase() === 'dark') {
+                body.style.backgroundColor = "black";
+                backButton.style.color = "white";
+                document.querySelectorAll('.preferences-container, .preference-item span, h2').forEach(el => el.style.color = "black");
+            } else {
+                body.style.backgroundColor = "";
+                backButton.style.color = "";
+                document.querySelectorAll('.preferences-container, .preference-item span, h2').forEach(el => el.style.color = "");
+            }
+        }
+
+        function toggleNotification() {
+            const notificationStatus = document.getElementById('notificationStatus');
+            const currentStatus = notificationStatus.textContent;
+            if (currentStatus === 'Enabled') {
+                notificationStatus.textContent = 'Disabled';
+            } else {
+                notificationStatus.textContent = 'Enabled';
+            }
+        }
+
+        function goBack() {
+            window.history.back();
         }
     </script>
     <style>
@@ -95,9 +121,20 @@
         .dropdown-content a:hover {
             background-color: #f1f1f1;
         }
+
+        /* Back button */
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
     </style>
 </head>
 <body class="light-theme">
+    <span id="backButton" class="back-button" onclick="goBack()">⬅</span>
     <div class="preferences-container">
         <h2>Preferences</h2>
 
@@ -126,9 +163,9 @@
         </div>
 
         <div class="preference-section">
-            <div class="preference-item">
+            <div class="preference-item" onclick="toggleNotification()">
                 <span>Notification Settings</span>
-                <span>➤</span>
+                <span id="notificationStatus">Enabled</span>
             </div>
         </div>
     </div>
