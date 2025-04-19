@@ -10,74 +10,72 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f0f2f5;
+            min-height: 100vh;
+            background-color: #f9fafb;
+            font-family: 'Inter', sans-serif;
         }
-        .phone-frame {
-            width: 375px;
-            height: 812px;
-            border: 10px solid #000;
-            border-radius: 30px;
-            background-color: white;
-            overflow: hidden;
-            position: relative;
-        }
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .form-container {
             width: 100%;
-            height: 250px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23a2d9ff" fill-opacity="1" d="M0,192L48,208C96,224,192,256,288,250.7C384,245,480,203,576,186.7C672,171,768,181,864,197.3C960,213,1056,235,1152,229.3C1248,224,1344,192,1392,176L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0L240,0C192,0,96,0,48,0L0,0Z"></path></svg>');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-        .content {
-            position: relative;
-            z-index: 2;
+            max-width: 400px;
             padding: 20px;
-            margin-top: 150px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .input-field {
-            background-color: rgba(255,255,255,0.8);
-            border-radius: 10px;
-            padding: 10px;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px 16px;
             margin-bottom: 15px;
-        }
-        .submit-button {
-            background-color: #000;
-            color: white;
-            border-radius: 10px;
-            padding: 15px;
+            font-size: 14px;
             width: 100%;
         }
-        .form-header {
+        .submit-button {
+            background-color: #4f46e5;
             color: white;
-            font-size: 24px;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
             font-weight: bold;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #3730a3;
+        }
+        .form-header {
+            color: #111827;
+            font-size: 24px;
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+        .link {
+            font-size: 14px;
+            color: #4f46e5;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .link:hover {
+            color: #3730a3;
         }
     </style>
 </head>
 <body>
-    <div class="phone-frame">
-        <div class="background-image"></div>
-        
-        <!-- Registration Screen -->
-        <div class="content">
-            <div class="form-header">Create your account</div>
-            <input type="text" placeholder="Name" class="input-field w-full">
-            <input type="email" placeholder="Email" class="input-field w-full">
-            <input type="password" placeholder="Password" class="input-field w-full">
-            <input type="password" placeholder="Confirm Password" class="input-field w-full">
-            UI/register.html
-            <button class="submit-button mt-4">Submit</button>
+    <div class="form-container">
+        <div class="form-header">Create your account</div>
+        <form>
+            <input type="text" placeholder="Name" class="input-field" required>
+            <input type="email" placeholder="Email" class="input-field" required>
+            <input type="password" placeholder="Password" class="input-field" required>
+            <input type="password" placeholder="Confirm Password" class="input-field" required>
             
-            <div class="text-center mt-4">
-                Already have an account? <a href="login.html" class="text-blue-500">Sign In</a>
-            </div>
+            <button type="submit" class="submit-button mt-4">Register</button>
+        </form>
+        
+        <div class="text-center mt-4 text-gray-600">
+            Already have an account? <a href="Login.html" class="link">Sign In</a>
         </div>
     </div>
 </body>
