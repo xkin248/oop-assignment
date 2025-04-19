@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Scanner</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
     <style>
         .scanner-overlay {
             position: absolute;
@@ -51,7 +52,7 @@
 
         <!-- Top Navigation -->
         <div class="absolute top-0 left-0 right-0 p-4 flex justify-between">
-            <button class="bg-white/20 rounded-full p-2">
+            <button class="bg-white/20 rounded-full p-2" onclick="history.back()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 18l-6-6 6-6"/>
                 </svg>
@@ -116,14 +117,28 @@
         // Gallery image processing
         document.getElementById('gallery-input').addEventListener('change', function(event) {
             const file = event.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                // TODO: Implement QR code detection for uploaded image
-                console.log('Image uploaded:', e.target.result);
-            };
-
-            reader.readAsDataURL(file);
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        const code = jsQR(imageData.data, imageData.width, imageData.height);
+                        if (code) {
+                            alert('QR Code detected: ' + code.data);
+                        } else {
+                            alert('No QR code detected. Please try again.');
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
         });
     </script>
 </body>
