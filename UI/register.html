@@ -65,11 +65,11 @@
 <body>
     <div class="form-container">
         <div class="form-header">Create your account</div>
-        <form>
-            <input type="text" placeholder="Name" class="input-field" required>
-            <input type="email" placeholder="Email" class="input-field" required>
-            <input type="password" placeholder="Password" class="input-field" required>
-            <input type="password" placeholder="Confirm Password" class="input-field" required>
+        <form id="registerForm">
+            <input type="text" id="name" placeholder="Name" class="input-field" required>
+            <input type="email" id="email" placeholder="Email" class="input-field" required>
+            <input type="password" id="password" placeholder="Password" class="input-field" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" class="input-field" required>
             
             <button type="submit" class="submit-button mt-4">Register</button>
         </form>
@@ -78,5 +78,30 @@
             Already have an account? <a href="Login.html" class="link">Sign In</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate password confirmation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Save user information (example: using localStorage)
+            const userInfo = { name, email, password };
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+            // Redirect to profile_create.html
+            window.location.href = 'profile_create.html';
+        });
+    </script>
 </body>
 </html>
