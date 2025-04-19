@@ -131,9 +131,21 @@
         <h2 class="logout-title">Log Out</h2>
         <p class="logout-subtitle">Are you sure you want to log out of your account? You'll need to sign in again to continue.</p>
         <div class="logout-buttons">
-            <button class="btn btn-logout">Log Out</button>
-            <button class="btn btn-cancel">Cancel</button>
+            <button class="btn btn-logout" id="logoutButton">Log Out</button>
+            <button class="btn btn-cancel" id="cancelButton">Cancel</button>
         </div>
     </div>
+
+    <script>
+        // Redirect to Login.html when the Log Out button is clicked
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            window.location.href = 'Login.html';
+        });
+
+        // Go back to the previous page when the Cancel button is clicked
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            history.back();
+        });
+    </script>
 </body>
 </html>
