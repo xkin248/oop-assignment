@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor Management System</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
@@ -51,15 +51,6 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        .forgot-password {
-            font-size: 14px;
-            color: #4f46e5;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .forgot-password:hover {
-            color: #3730a3;
-        }
         .error-message {
             color: #b91c1c;
             font-size: 14px;
@@ -74,21 +65,8 @@
         <form onsubmit="handleSignIn(event)">
             <input type="email" placeholder="Email" class="input-field" id="email" required>
             <input type="password" placeholder="Password" class="input-field" id="password" required>
-            
-            <div class="flex justify-between items-center mb-4">
-                <label class="flex items-center text-gray-600 text-sm">
-                    <input type="checkbox" class="mr-2">
-                    Remember Me
-                </label>
-                <a href="#" class="forgot-password">Forgot Password?</a>
-            </div>
-            
             <button type="submit" class="submit-button">Sign In</button>
         </form>
-        
-        <div class="text-center mt-4 text-gray-600">
-            Don't have an account? <a href="register.html" class="forgot-password">Sign Up</a>
-        </div>
         <div id="error-message" class="error-message"></div>
     </div>
 
@@ -100,8 +78,7 @@
             const password = document.getElementById("password").value;
 
             try {
-                // Simulated API call to check account in the database
-                const response = await fetch('/api/validate-account', {
+                const response = await fetch('/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -111,18 +88,17 @@
 
                 const result = await response.json();
 
-                if (response.ok && result.hasAccount) {
-                    // Redirect to dashboard if account exists
-                    window.location.href = "main_dashboard.html";
+                if (response.ok) {
+                    alert("Login successful!");
+                    window.location.href = "/dashboard";
                 } else {
-                    // Show error message if account doesn't exist
                     const errorMessage = document.getElementById("error-message");
-                    errorMessage.textContent = "Please create an account.";
+                    errorMessage.textContent = result.message || "Invalid email or password.";
                 }
             } catch (error) {
-                console.error("Error validating account:", error);
+                console.error("Error during login:", error);
                 const errorMessage = document.getElementById("error-message");
-                errorMessage.textContent = "An error occurred. Please try again later.";
+                errorMessage.textContent = "An error occurred. Please try again.";
             }
         }
     </script>

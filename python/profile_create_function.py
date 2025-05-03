@@ -13,12 +13,11 @@ def create_user_profile(full_name, gender, passport_no, phone_number, reason_for
         reason_for_visit (str): Reason for the user's visit.
     """
     try:
-        # Establish database connection
         connection = mysql.connector.connect(
-            host='localhost',       # Replace with your DB host
-            database='your_database',  # Replace with your database name
-            user='your_username',   # Replace with your DB username
-            password='your_password' # Replace with your DB password
+            host='localhost',  # Replace with your MySQL host
+            database='sarawak_tourism',  # Replace with your database name
+            user='root',  # Replace with your MySQL username
+            password='hello'  # Replace with your MySQL password
         )
         
         if connection.is_connected():

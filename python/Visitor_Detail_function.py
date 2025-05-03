@@ -5,10 +5,10 @@ def fetch_visitor_details():
     try:
         # Connect to the MySQL database
         connection = mysql.connector.connect(
-            host='localhost',  # Update with your database host
-            user='your_username',  # Update with your MySQL username
-            password='your_password',  # Update with your MySQL password
-            database='your_database'  # Update with your database name
+            host='localhost',  # Replace with your MySQL host
+            database='sarawak_tourism',  # Replace with your database name
+            user='root',  # Replace with your MySQL username
+            password='hello'  # Replace with your MySQL password
         )
 
         if connection.is_connected():
