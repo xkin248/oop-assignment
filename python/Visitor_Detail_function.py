@@ -72,9 +72,9 @@ def update_visitor_details(visitor_id, name=None, email=None, phone=None, addres
         # Connect to the MySQL database
         connection = mysql.connector.connect(
             host='localhost',  # Update with your database host
-            user='your_username',  # Update with your MySQL username
-            password='your_password',  # Update with your MySQL password
-            database='your_database'  # Update with your database name
+            user='root',  # Update with your MySQL username
+            password='hello',  # Update with your MySQL password
+            database='sarawak_tourism'  # Update with your database name
         )
 
         if connection.is_connected():
