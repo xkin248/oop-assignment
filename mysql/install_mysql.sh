@@ -12,12 +12,13 @@ sudo apt install -y mysql-server
 echo "Starting MySQL service..."
 sudo service mysql start
 
-# Secure MySQL Installation
-echo "Securing MySQL installation..."
-sudo mysql_secure_installation
+# Set MySQL root password to 'hello' and secure installation
+echo "Setting MySQL root password and securing installation..."
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'hello';"
+sudo mysql -e "FLUSH PRIVILEGES;"
 
 # Create Database and Tables
 echo "Setting up the database..."
-mysql -u root -p < /workspaces/oop-assignment/mysql/database.sql
+mysql -u root -phello < /workspaces/oop-assignment/mysql/database.sql
 
 echo "MySQL installation and setup completed successfully!"
