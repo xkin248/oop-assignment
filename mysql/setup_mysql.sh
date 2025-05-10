@@ -40,3 +40,4 @@ if [ "$run_docker" == "y" ]; then
     docker run --name mysql-dev -e MYSQL_ROOT_PASSWORD=hello -p 3306:3306 -d mysql:8
     echo "Docker container started. You can connect via: mysql -h 127.0.0.1 -P 3306 -u root -p"
 fi
+
