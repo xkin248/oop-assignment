@@ -10,7 +10,7 @@
             "port": 3306,
             "driver": "MySQL",
             "connectionTimeout": 30,
-            "database": "Sarawak_Tourism",
+            "database": "sarawak_tourism",
             "name": "Sarawak Tourism",
             "password": "hello",
             "username": "root"

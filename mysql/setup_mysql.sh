@@ -19,6 +19,3 @@ sudo mysql -e "FLUSH PRIVILEGES;"
 
 # Create Database and Tables
 echo "Setting up the database..."
-mysql -u root -phello < /workspaces/oop-assignment/mysql/database.sql
-
-echo "MySQL installation and setup completed successfully!"
