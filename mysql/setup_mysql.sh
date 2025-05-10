@@ -8,14 +8,33 @@ sudo apt update
 echo "Installing MySQL Server..."
 sudo apt install -y mysql-server
 
-# Start MySQL Service
-echo "Starting MySQL service..."
+# Stop the MySQL service
+echo "Stopping MySQL service..."
+sudo service mysql stop
+
+# Start MySQL in safe mode
+echo "Starting MySQL in safe mode..."
+sudo mysqld_safe --skip-grant-tables > /dev/null 2>&1 &
+
+# Wait for MySQL to start
+echo "Waiting for MySQL to start in safe mode..."
+sleep 5
+
+# Reset the MySQL root password
+echo "Resetting MySQL root password to 'hello'..."
+mysql -u root <<EOF
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'hello';
+FLUSH PRIVILEGES;
+EOF
+
+# Kill the safe mode process
+echo "Stopping MySQL safe mode..."
+sudo killall mysqld_safe
+sudo killall mysqld
+
+# Restart the MySQL service
+echo "Restarting MySQL service..."
 sudo service mysql start
 
-# Set MySQL root password to 'hello' and secure installation
-echo "Setting MySQL root password and securing installation..."
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'hello';"
-sudo mysql -e "FLUSH PRIVILEGES;"
-
-# Create Database and Tables
-echo "Setting up the database..."
+echo "MySQL root password has been reset to 'hello'."
