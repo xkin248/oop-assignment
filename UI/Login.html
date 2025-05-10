@@ -5,84 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f9fafb;
-            font-family: 'Inter', sans-serif;
-        }
-        .form-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .input-field {
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            width: 100%;
-        }
-        .submit-button {
-            background-color: #4f46e5;
-            color: white;
-            border-radius: 6px;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        .submit-button:hover {
-            background-color: #3730a3;
-        }
-        .form-header {
-            color: #111827;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .error-message {
-            color: #b91c1c;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 10px;
-        }
-    </style>
 </head>
-<body>
-    <div class="form-container">
-        <div class="form-header">Welcome Back!</div>
-        <form onsubmit="handleSignIn(event)">
-            <input type="email" placeholder="Email" class="input-field" id="email" required>
-            <input type="password" placeholder="Password" class="input-field" id="password" required>
-            <button type="submit" class="submit-button">Sign In</button>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="form-container bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-2xl font-bold mb-4 text-center">Welcome Back!</h2>
+        <form onsubmit="handleSignIn(event)" novalidate>
+            <input type="email" placeholder="Email" class="input-field w-full mb-4 p-2 border rounded" id="email" required>
+            <input type="password" placeholder="Password" class="input-field w-full mb-4 p-2 border rounded" id="password" required>
+            <button type="submit" class="submit-button w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Sign In</button>
         </form>
-        <div id="error-message" class="error-message"></div>
+        <div id="error-message" class="error-message text-red-500 text-center mt-4"></div>
+        <a href="/register" class="register-link text-blue-500 text-center block mt-4">Don't have an account? Register here</a>
     </div>
 
     <script>
         async function handleSignIn(event) {
-            event.preventDefault(); // Prevent default form submission
-
+            event.preventDefault();
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            errorMessage.textContent = "";
 
             try {
                 const response = await fetch('/login', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
 
@@ -92,12 +40,9 @@
                     alert("Login successful!");
                     window.location.href = "/dashboard";
                 } else {
-                    const errorMessage = document.getElementById("error-message");
                     errorMessage.textContent = result.message || "Invalid email or password.";
                 }
             } catch (error) {
-                console.error("Error during login:", error);
-                const errorMessage = document.getElementById("error-message");
                 errorMessage.textContent = "An error occurred. Please try again.";
             }
         }

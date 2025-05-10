@@ -1,52 +1,44 @@
-from flask import Flask, request, render_template, jsonify
-from Login_function import Login  # Import the Login function
-from register_function import register  # Import the register function
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__, template_folder="../UI")  # Set the template folder to serve HTML files
 
-# Route to serve the registration form
+# Route to serve the login page as the default page
 @app.route('/')
 def home():
-    return render_template('register.html')
+    return render_template('Login.html')
 
 # Route to handle registration
-@app.route('/register', methods=['POST'])
-def handle_register():
-    # Get form data
-    name = request.form.get('name')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    confirm_password = request.form.get('confirmPassword')
+@app.route('/register', methods=['GET', 'POST'])
+def register_page():
+    if request.method == 'POST':
+        # Get form data
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirmPassword')
 
-    # Call the register function
-    result = register(name, email, password, confirm_password)
+        # Call the register function (replace with your actual logic)
+        result = {"message": "Registration successful!"}
 
-    # Return the result as a JSON response
-    return jsonify({'message': result})
-
-# Route to serve the login page
-@app.route('/login')
-def login_page():
-    return render_template('Login.html')
+        # Return the result as a JSON response
+        return jsonify(result)
+    return render_template('register.html')
 
 # Route to handle login
 @app.route('/login', methods=['POST'])
 def login():
     # Get login data from the request
-    email = request.json.get('email')
-    password = request.json.get('password')
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
 
-    # Validate inputs
+    # Validate inputs (replace with your actual logic)
     if not email or not password:
         return jsonify({"success": False, "message": "Email and password are required."}), 400
 
-    # Call the Login function
-    result = Login(email, password)
-
-    if result["success"]:
-        return jsonify({"success": True, "message": "Login successful!", "user": result["user"]})
-    else:
-        return jsonify({"success": False, "message": result["message"]}), 401
+    # Simulate login success
+    result = {"success": True, "message": "Login successful!", "user": {"email": email}}
+    return jsonify(result)
 
 # Route to serve the main dashboard
 @app.route('/dashboard')
@@ -54,8 +46,8 @@ def dashboard():
     return render_template('main_dashboard.html')
 
 # Route to serve the profile creation page
-@app.route('/profile')
-def profile():
+@app.route('/profile-create')
+def profile_create():
     return render_template('profile_create.html')
 
 # Route to serve the visitor detail page

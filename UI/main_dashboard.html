@@ -3,142 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-    </style>
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden flex">
-        <!-- Sidebar -->
-        <div class="w-24 bg-gray-900 text-white flex flex-col items-center py-8 space-y-6">
-            <div class="text-2xl mb-6">
-                <i class="fas fa-cube"></i>
-            </div>
-            <div class="space-y-4">
-                <button class="hover:bg-gray-700 p-3 rounded-lg transition-colors">
-                    <i class="fas fa-home"></i>
-                </button>
-                <button class="hover:bg-gray-700 p-3 rounded-lg transition-colors">
-                    <i class="fas fa-chart-pie"></i>
-                </button>
-                <button class="hover:bg-gray-700 p-3 rounded-lg transition-colors">
-                    <i class="fas fa-users"></i>
-                </button>
-                <button class="hover:bg-gray-700 p-3 rounded-lg transition-colors">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-            <div class="mt-auto">
-                <button class="hover:bg-gray-700 p-3 rounded-lg transition-colors">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 p-8">
-            <div class="flex justify-between items-center mb-8">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
-                    <p class="text-gray-500">Welcome back, User</p>
-                </div>
-                <div class="relative">
-                    <input type="text" placeholder="Search..." class="bg-gray-100 rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <i class="fas fa-search absolute right-4 top-3 text-gray-400"></i>
-                </div>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-4 gap-6 mb-8">
-                <div class="bg-blue-100 rounded-2xl p-6 hover:scale-105 transition-transform">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-gray-500 mb-2">Total Revenue</p>
-                            <h2 class="text-2xl font-bold text-blue-600">$24,560</h2>
-                        </div>
-                        <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
-                    </div>
-                </div>
-                <div class="bg-green-100 rounded-2xl p-6 hover:scale-105 transition-transform">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-gray-500 mb-2">New Users</p>
-                            <h2 class="text-2xl font-bold text-green-600">1,234</h2>
-                        </div>
-                        <i class="fas fa-users text-green-600 text-2xl"></i>
-                    </div>
-                </div>
-                <div class="bg-purple-100 rounded-2xl p-6 hover:scale-105 transition-transform">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-gray-500 mb-2">Pending Tasks</p>
-                            <h2 class="text-2xl font-bold text-purple-600">42</h2>
-                        </div>
-                        <i class="fas fa-tasks text-purple-600 text-2xl"></i>
-                    </div>
-                </div>
-                <div class="bg-red-100 rounded-2xl p-6 hover:scale-105 transition-transform">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-gray-500 mb-2">Alerts</p>
-                            <h2 class="text-2xl font-bold text-red-600">7</h2>
-                        </div>
-                        <i class="fas fa-bell text-red-600 text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Activities -->
-            <div class="bg-gray-50 rounded-2xl p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-semibold text-gray-800">Recent Activities</h2>
-                    <button class="text-blue-600 hover:underline">View All</button>
-                </div>
-                <div class="space-y-4">
-                    <div class="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-blue-100 p-3 rounded-full">
-                                <i class="fas fa-shopping-cart text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">New Order #3456</p>
-                                <p class="text-sm text-gray-500">2 hours ago</p>
-                            </div>
-                        </div>
-                        <span class="text-green-600 font-semibold">+$450</span>
-                    </div>
-                    <div class="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-green-100 p-3 rounded-full">
-                                <i class="fas fa-user-plus text-green-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">New User Registration</p>
-                                <p class="text-sm text-gray-500">Today</p>
-                            </div>
-                        </div>
-                        <span class="text-gray-500">Verified</span>
-                    </div>
-                    <div class="bg-white rounded-xl p-4 flex items-center justify-between shadow-sm">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-purple-100 p-3 rounded-full">
-                                <i class="fas fa-file-alt text-purple-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">Report Generated</p>
-                                <p class="text-sm text-gray-500">Yesterday</p>
-                            </div>
-                        </div>
-                        <button class="text-blue-600 hover:underline">View</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-blue-500 text-white p-4">
+        <ul class="flex space-x-4">
+            <li><a href="/profile-create" class="hover:underline">Profile</a></li>
+            <li><a href="/visitor-detail" class="hover:underline">Visitor Details</a></li>
+            <li><a href="/add-appointment" class="hover:underline">Add Appointment</a></li>
+            <li><a href="/today-appointments" class="hover:underline">Today's Appointments</a></li>
+            <li><a href="/logout" class="hover:underline">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="p-6">
+        <h1 class="text-3xl font-bold">Welcome to the Dashboard</h1>
+        <p class="mt-4">Use the navigation bar to access different sections.</p>
     </div>
 </body>
 </html>

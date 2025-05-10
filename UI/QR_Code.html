@@ -3,88 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal QR Code Generator</title>
+    <title>QR Code Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen relative">
-    <!-- Back Arrow Button -->
-    <button onclick="goBack()" 
-        class="absolute top-4 left-4 bg-gray-300 text-gray-700 hover:bg-gray-400 px-3 py-2 rounded-full focus:outline-none">
-        ← Back
-    </button>
-
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white shadow-lg rounded-lg p-6 w-96">
         <h2 class="text-2xl font-bold mb-4 text-center">QR Code Generator</h2>
-        <div id="userDetails" class="space-y-4 mb-4">
-            <div class="flex items-center">
-                <strong class="w-32">Full Name:</strong>
-                <span id="name" class="text-gray-700">Loading...</span>
-            </div>
-            <div class="flex items-center">
-                <strong class="w-32">Email:</strong>
-                <span id="email" class="text-gray-700">Loading...</span>
-            </div>
-            <div class="flex items-center">
-                <strong class="w-32">Passport ID:</strong>
-                <span id="passportId" class="text-gray-700">Loading...</span>
-            </div>
-            <div class="flex items-center">
-                <strong class="w-32">Purpose:</strong>
-                <span id="purpose" class="text-gray-700">Loading...</span>
-            </div>
-        </div>
-        <button type="button" onclick="generatePersonalQRCode()"
-            class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <button type="button" onclick="generateQRCode()" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Generate QR Code
         </button>
         <div id="qrcode" class="flex items-center justify-center my-4"></div>
-        <button onclick="redirectToQRScanner()"
-            class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        <button onclick="window.location.href='/scan-qr'" class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
             Scan QR Code
         </button>
     </div>
 
     <script>
-        // Go Back Function
-        function goBack() {
-            window.history.back();
-        }
-
-        // Fetch Visitor Details
-        function getVisitorDetails() {
-            // Simulating visitor account details (replace with actual database or API integration)
-            return {
-                fullName: "Jason Ting Li Hui",
-                email: "jason@example.com",
-                passportId: "A12345678",
-                purpose: "Business Meeting"
-            };
-        }
-
-        // Populate Visitor Details
-        function populateVisitorDetails() {
-            const visitor = getVisitorDetails();
-            document.getElementById('name').textContent = visitor.fullName;
-            document.getElementById('email').textContent = visitor.email;
-            document.getElementById('passportId').textContent = visitor.passportId;
-            document.getElementById('purpose').textContent = visitor.purpose;
-        }
-
-        // QR Code Generation Function
-        function generatePersonalQRCode() {
-            const visitor = getVisitorDetails();
-
-            const qrCodeContent = JSON.stringify({
-                fullName: visitor.fullName,
-                email: visitor.email,
-                passportId: visitor.passportId,
-                purpose: visitor.purpose
-            });
-
+        function generateQRCode() {
+            const qrCodeContent = "Sample QR Code Content";
             const qrcodeContainer = document.getElementById('qrcode');
             qrcodeContainer.innerHTML = '';
-
             new QRCode(qrcodeContainer, {
                 text: qrCodeContent,
                 width: 200,
@@ -94,14 +33,6 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
         }
-
-        // Redirect to Scan QR Page
-        function redirectToQRScanner() {
-            window.location.href = "Scan_QR.html";
-        }
-
-        // Populate user details on page load
-        document.addEventListener('DOMContentLoaded', populateVisitorDetails);
     </script>
 </body>
 </html>

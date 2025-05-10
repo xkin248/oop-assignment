@@ -22,15 +22,12 @@ def Login(email, password):
             user = cursor.fetchone()
             
             if user:
-                print("Login successful!")
-                return True  # Return True for successful login
+                return {"success": True, "user": user}  # Return user data for successful login
             else:
-                print("Invalid email or password.")
-                return False  # Return False for invalid credentials
+                return {"success": False, "message": "Invalid email or password."}
 
     except Error as e:
-        print(f"Error while connecting to MySQL {e}")
-        return False
+        return {"success": False, "message": f"Error while connecting to MySQL: {e}"}
     
     finally:
         if connection.is_connected():
@@ -40,4 +37,9 @@ def Login(email, password):
 # Example usage
 email = input("Enter your email: ")
 password = input("Enter your password: ")
-Login(email, password)
+result = Login(email, password)
+if result["success"]:
+    print("Login successful!")
+    print("User data:", result["user"])
+else:
+    print(result["message"])
