@@ -1,40 +1,42 @@
 #!/bin/bash
 
-# Update package lists
-echo "Updating package lists..."
-sudo apt update
+# Check if MySQL is installed
+if ! command -v mysql >/dev/null 2>&1; then
+    echo "MySQL is not installed. Installing MySQL server..."
 
-# Install MySQL Server
-echo "Installing MySQL Server..."
-sudo apt install -y mysql-server
+    # Install MySQL (for Debian/Ubuntu)
+    sudo apt update
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y mysql-server
 
-# Stop the MySQL service
-echo "Stopping MySQL service..."
-sudo service mysql stop
+    echo "MySQL installed."
+    sudo systemctl start mysql
+    echo "MySQL service started."
 
-# Start MySQL in safe mode
-echo "Starting MySQL in safe mode..."
-sudo mysqld_safe --skip-grant-tables > /dev/null 2>&1 &
+    # Set root password to 'hello'
+    echo "Setting root password to 'hello'..."
+    sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'hello'; FLUSH PRIVILEGES;"
+    echo "Root password set to 'hello'."
 
-# Wait for MySQL to start
-echo "Waiting for MySQL to start in safe mode..."
-sleep 5
+else
+    echo "MySQL is already installed."
 
-# Reset the MySQL root password
-echo "Resetting MySQL root password to 'hello'..."
-mysql -u root <<EOF
-FLUSH PRIVILEGES;
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'hello';
-FLUSH PRIVILEGES;
-EOF
+    # Start MySQL service if not running
+    if ! pgrep -x "mysqld" > /dev/null; then
+        echo "Starting MySQL service..."
+        sudo systemctl start mysql
+    fi
 
-# Kill the safe mode process
-echo "Stopping MySQL safe mode..."
-sudo killall mysqld_safe
-sudo killall mysqld
+    # Change password just in case
+    echo "Ensuring root password is set to 'hello'..."
+    sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'hello'; FLUSH PRIVILEGES;"
+fi
 
-# Restart the MySQL service
-echo "Restarting MySQL service..."
-sudo service mysql start
+# Optional Docker fallback
+echo "Do you want to run MySQL in Docker instead? (y/n)"
+read run_docker
 
-echo "MySQL root password has been reset to 'hello'."
+if [ "$run_docker" == "y" ]; then
+    echo "Starting MySQL in Docker..."
+    docker run --name mysql-dev -e MYSQL_ROOT_PASSWORD=hello -p 3306:3306 -d mysql:8
+    echo "Docker container started. You can connect via: mysql -h 127.0.0.1 -P 3306 -u root -p"
+fi

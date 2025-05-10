@@ -1,6 +1,4 @@
-sudo mysql -u root -phello <<EOF
-
-DROP DATABASE IF EXISTS sarawak_tourism;
+mysql -h 127.0.0.1 -P 3306 -u root -p
 
 -- Create the database
 CREATE DATABASE IF NOT EXISTS sarawak_tourism;

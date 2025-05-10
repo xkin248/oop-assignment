@@ -1,7 +1,7 @@
 import mysql.connector
 
 db_config = {
-    "host": "localhost",
+    "host": "127.0.0.1",
     "user": "root",  # Replace with your MySQL username
     "password": "hello",  # Replace with your MySQL password
     "database": "sarawak_tourism"
