@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS Appointments (
     appointment_date DATE NOT NULL,
     appointment_time TIME NOT NULL,
     description TEXT,
+    location VARCHAR(255), -- Added the location column
+    status VARCHAR(20) DEFAULT 'Pending', -- Optional: Add status column if needed
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
 

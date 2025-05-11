@@ -3,165 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Mobile UI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            background-color: #f7f4fa;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .back-button {
-            margin-right: 12px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        .title {
-            font-size: 20px;
-            font-weight: 500;
-        }
-        
-        .tab-container {
-            display: flex;
-            margin: 12px 20px;
-            border: 1px solid #d6d1e0;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        
-        .tab.active {
-            background-color: #f0eaf5;
-            color: #5c4e7a;
-            font-weight: 500;
-        }
-        
-        .new-appointment-btn {
-            display: inline-flex;
-            align-items: center;
-            margin: 8px 20px 16px;
-            padding: 12px 20px;
-            background-color: #f0eaf5;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #6c5a9e;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        
-        .edit-icon {
-            margin-right: 8px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .appointment-card {
-            margin: 12px 20px;
-            background-color: white;
-            padding: 16px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .appointment-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .appointment-section {
-            margin-bottom: 16px;
-        }
-        
-        .section-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 4px;
-        }
-        
-        .section-value {
-            font-size: 16px;
-        }
-    </style>
+    <title>Today's Appointments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="header">
-        <div class="back-button" onclick="history.back()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.5 19L8.5 12L15.5 5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-        <h1 class="title">Appointment</h1>
-    </div>
-    
-    <div class="tab-container">
-        <div class="tab active">
-            <span>✓ Upcoming</span>
-        </div>
-        <div class="tab" onclick="location.href='AS_HistoryAppointment.html'">
-            <span>Past Appointment</span>
-        </div>
-    </div>
-    
-    <a class="new-appointment-btn" href="Add_New_Appointment.html">
-        <div class="edit-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 3C17.2626 2.73735 17.5744 2.52901 17.9176 2.38687C18.2608 2.24473 18.6286 2.17157 19 2.17157C19.3714 2.17157 19.7392 2.24473 20.0824 2.38687C20.4256 2.52901 20.7374 2.73735 21 3C21.2626 3.26264 21.471 3.57444 21.6131 3.9176C21.7553 4.26077 21.8284 4.62856 21.8284 5C21.8284 5.37143 21.7553 5.73923 21.6131 6.08239C21.471 6.42555 21.2626 6.73735 21 7L7.5 20.5L2 22L3.5 16.5L17 3Z" stroke="#6c5a9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-        <span>New Appointment</span>
-    </a>
-    
-    <div class="appointment-card">
-        <h2 class="appointment-title">Sibu - Kuching</h2>
-        
-        <div class="appointment-section">
-            <div class="section-label">Date & Time</div>
-            <div class="section-value">25 March 2025 · 2:00 PM - 3:00PM</div>
-        </div>
-        
-        <div class="appointment-section">
-            <div class="section-label">Location</div>
-            <div class="section-value">Kuching</div>
-        </div>
-        
-        <div class="appointment-section">
-            <div class="section-label">Name</div>
-            <div class="section-value">Jason Ting Li Hui</div>
-        </div>
-        
-        <div class="appointment-section">
-            <div class="section-label">NRIC:</div>
-            <div class="section-value">060542-13-5646</div>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-2xl mt-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Today's Appointments</h1>
+
+        {% if appointments %}
+            {% for appointment in appointments %}
+                <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800">{{ appointment.description }}</h2>
+                    <p class="text-gray-600 mt-2"><strong>Date:</strong> {{ appointment.appointment_date }}</p>
+                    <p class="text-gray-600"><strong>Time:</strong> {{ appointment.appointment_time }}</p>
+                    <p class="text-gray-600"><strong>Location:</strong> {{ appointment.location }}</p>
+                    <p class="text-gray-600"><strong>Status:</strong> 
+                        <span class="font-semibold {% if appointment.status == 'Pending' %}text-yellow-500{% else %}text-green-500{% endif %}">
+                            {{ appointment.status }}
+                        </span>
+                    </p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-gray-500">No appointments for today.</p>
+        {% endif %}
+
+        <!-- Button to navigate to history appointments -->
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('ui.history_appointments') }}" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                View Appointment History
+            </a>
         </div>
     </div>
 </body>
