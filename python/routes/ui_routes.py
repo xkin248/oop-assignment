@@ -53,7 +53,22 @@ def today_appointment():
 
 @ui_bp.route('/history-appointments')
 def history_appointments():
-    return render_template('AS_HistoryAppointment.html')
+    user_id = session.get('user_id')  # Ensure the user is logged in
+
+    if not user_id:
+        flash('You must be logged in to view your appointments.', 'danger')
+        return redirect(url_for('auth.login'))
+
+    # Fetch all past appointments for the logged-in user
+    query = """
+        SELECT * FROM Appointments
+        WHERE user_id = %s AND appointment_date < CURDATE()
+        ORDER BY appointment_date DESC, appointment_time DESC
+    """
+    appointments = query_db(query, (user_id,))
+    print("History Appointments:", appointments)  # Debug statement
+
+    return render_template('AS_HistoryAppointment.html', appointments=appointments)
 
 @ui_bp.route('/payment-services')
 def payment_services():
