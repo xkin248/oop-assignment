@@ -8,56 +8,58 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-    <div class="max-w-md mx-auto bg-white min-h-screen">
-        <div class="px-4 pt-6">
-            <div class="flex items-center space-x-4 mb-6">
-                <i class="fas fa-arrow-left text-gray-600 cursor-pointer" onclick="window.history.back();"></i>
-                <h1 class="text-xl font-semibold">Account</h1>
-            </div>
+    <div class="min-h-screen flex flex-col bg-white">
+        <!-- Header Section -->
+        <div class="bg-gray-800 text-white px-6 py-4 flex items-center">
+            <i class="fas fa-arrow-left text-xl cursor-pointer" onclick="window.history.back();"></i>
+            <h1 class="text-2xl font-semibold ml-4">Account Settings</h1>
+        </div>
 
-            <div class="flex items-center space-x-4 mb-6">
-                <img src="/api/placeholder/120/120" alt="Profile" class="w-20 h-20 rounded-full object-cover">
-                <div>
-                    <h2 class="font-semibold">Jason Ting Li Hui</h2>
-                    <a href="Visitor_Detail.html" class="text-green-500 text-sm">view profile</a>
-                </div>
-                <div class="ml-auto">
-                    <i class="fas fa-qrcode text-gray-600 cursor-pointer" onclick="alert('QR Code functionality coming soon!');"></i>
-                </div>
+        <!-- Profile Section -->
+        <div class="p-6 border-b flex items-center">
+            <img src="/api/placeholder/120/120" alt="Profile" class="w-24 h-24 rounded-full object-cover">
+            <div class="ml-4">
+                <h2 class="text-2xl font-semibold">Jason Ting Li Hui</h2>
+                <a href="Visitor_Detail.html" class="text-green-500 text-lg">View Profile</a>
             </div>
+            <div class="ml-auto">
+                <i class="fas fa-qrcode text-2xl text-gray-600 cursor-pointer" onclick="alert('QR Code functionality coming soon!');"></i>
+            </div>
+        </div>
 
-            <div class="space-y-4">
-                <div class="flex justify-between items-center py-3 border-b cursor-pointer" onclick="alert('Coming soon!');">
-                    <span>Pay and Service</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b cursor-pointer" onclick="window.location.href = 'AS_HistoryAppointment.html';">
-                    <span>History Appointment</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b cursor-pointer" onclick="window.location.href = '/preferences';">
-                    <span>Preferences</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b cursor-pointer" onclick="window.location.href = '/privacy';">
-                    <span>Privacy</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b cursor-pointer" onclick="window.location.href = '/security;">
-                    <span>Security</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
-                <div class="flex justify-between items-center py-3 cursor-pointer" onclick="alert('Support functionality coming soon!');">
-                    <span class="text-red-500">Support</span>
-                </div>
+        <!-- Menu Section -->
+        <div class="flex-grow p-6 space-y-4">
+            <div class="flex justify-between items-center py-4 border-b cursor-pointer" onclick="alert('Coming soon!');">
+                <span class="text-lg font-medium">Pay and Service</span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
             </div>
+            <div class="flex justify-between items-center py-4 border-b cursor-pointer" onclick="window.location.href = 'AS_HistoryAppointment.html';">
+                <span class="text-lg font-medium">History Appointment</span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex justify-between items-center py-4 border-b cursor-pointer" onclick="window.location.href = '/preferences';">
+                <span class="text-lg font-medium">Preferences</span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex justify-between items-center py-4 border-b cursor-pointer" onclick="window.location.href = '/privacy';">
+                <span class="text-lg font-medium">Privacy</span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex justify-between items-center py-4 border-b cursor-pointer" onclick="window.location.href = '/security';">
+                <span class="text-lg font-medium">Security</span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex justify-between items-center py-4 cursor-pointer" onclick="alert('Support functionality coming soon!');">
+                <span class="text-lg font-medium text-red-500">Support</span>
+            </div>
+        </div>
 
-            <div class="mt-8 px-4">
-                <button class="w-full bg-white border border-gray-300 py-3 rounded-lg font-semibold text-gray-700"
-                    onclick="if (confirm('Are you sure you want to log out?')) { window.location.href = 'LogOut.html'; }">
-                    Log Out
-                </button>
-            </div>
+        <!-- Footer Section -->
+        <div class="p-6">
+            <button class="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600"
+                onclick="if (confirm('Are you sure you want to log out?')) { window.location.href = 'LogOut.html'; }">
+                Log Out
+            </button>
         </div>
     </div>
 </body>
