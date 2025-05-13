@@ -5,20 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <nav class="bg-blue-500 text-white p-4">
-        <ul class="flex space-x-4">
-            <li><a href="/profile-create" class="hover:underline">Profile</a></li>
-            <li><a href="/visitor-detail" class="hover:underline">Visitor Details</a></li>
-            <li><a href="/add-appointment" class="hover:underline">Add Appointment</a></li>
-            <li><a href="/today-appointments" class="hover:underline">Today's Appointments</a></li>
-            <li><a href="/logout" class="hover:underline">Logout</a></li>
-        </ul>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="text-2xl font-bold hover:opacity-80 transition">SarawakVisTrack</a>
+            <!-- Right Buttons -->
+            <div class="flex space-x-4">
+                <a href="/settings" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Settings
+                </a>
+                <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition">
+                    Logout
+                </a>
+            </div>
+        </div>
     </nav>
-    <div class="p-6">
-        <h1 class="text-3xl font-bold">Welcome to the Dashboard</h1>
-        <p class="mt-4">Use the navigation bar to access different sections.</p>
-    </div>
+
+    <!-- Header -->
+    <header class="bg-blue-100 text-center py-8">
+        <h1 class="text-4xl font-bold text-blue-600">Welcome to SarawakVisTrack</h1>
+        <p class="mt-2 text-gray-600">Manage your appointments and visitor details effortlessly.</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <!-- Dashboard Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition">
+                <h2 class="text-xl font-bold text-blue-600">Profile</h2>
+                <p class="mt-2 text-gray-600">Update your personal information and settings.</p>
+                <a href="/profile-create" class="text-blue-500 hover:underline mt-4 block">Go to Profile</a>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition">
+                <h2 class="text-xl font-bold text-blue-600">Visitor Details</h2>
+                <p class="mt-2 text-gray-600">View and manage visitor information seamlessly.</p>
+                <a href="/visitor-detail" class="text-blue-500 hover:underline mt-4 block">View Details</a>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition">
+                <h2 class="text-xl font-bold text-blue-600">Add Appointment</h2>
+                <p class="mt-2 text-gray-600">Schedule new appointments quickly.</p>
+                <a href="/add-appointment" class="text-blue-500 hover:underline mt-4 block">Add Appointment</a>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition">
+                <h2 class="text-xl font-bold text-blue-600">Today's Appointments</h2>
+                <p class="mt-2 text-gray-600">Keep track of your daily schedule and tasks.</p>
+                <a href="/today-appointments" class="text-blue-500 hover:underline mt-4 block">View Schedule</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 SarawakVisTrack. All rights reserved.</p>
+            <p class="text-sm mt-2">Designed with visitor management system</p>
+        </div>
+    </footer>
 </body>
 </html>
