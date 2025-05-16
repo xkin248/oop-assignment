@@ -22,6 +22,9 @@ app.register_blueprint(dashboard_bp)
 app.register_blueprint(logout_bp)
 app.register_blueprint(ui_bp)
 
-# Run server
+# Azure best practice: Use gunicorn for production, only use Flask's built-in server for local dev
+def main():
+    app.run(debug=os.environ.get('FLASK_DEBUG', 'False') == 'True')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    main()
