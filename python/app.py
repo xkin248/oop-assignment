@@ -22,7 +22,6 @@ SSL_CERT = 'DigiCertGlobalRootCA.crt.pem'
 # Debug (safe for local dev)
 print("🔍 DB_USER:", DB_USER)
 print("🔍 DB_HOST:", DB_HOST)
-print("🔍 DB_NAME:", DB_NAME)
 
 # Build connection string
 if os.path.exists(SSL_CERT):
