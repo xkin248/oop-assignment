@@ -15,5 +15,7 @@
             "password": "hello",
             "username": "root"
         }
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/e3b174b8-b1b4-4f07-b0de-2ccc3eb50866/resourceGroups/sarawaktourism/providers/Microsoft.Web/sites/sarawaktourism",
+    "appService.deploySubpath": "."
 }
