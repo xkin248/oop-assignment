@@ -4,10 +4,10 @@ from mysql.connector import errorcode
 # Obtain connection string information from the portal
 
 config = {
-  'host':'<mydemoserver>.mysql.database.azure.com',
-  'user':'<myadmin>',
-  'password':'<mypassword>',
-  'database':'<mydatabase>'
+  'host':'stdb3.mysql.database.azure.com',
+  'user':'Henry@stdb3',
+  'password':'Hello123',
+  'database':'sarawk_tourism'
 }
 
 # Construct connection string
