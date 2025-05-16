@@ -1,11 +1,6 @@
 import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
-from sqlalchemy import create_engine, text
-from dotenv import load_dotenv
-
-# Load environment variables from .env (only in local dev)
-load_dotenv()
 
 # Flask app setup
 app = Flask(__name__)
