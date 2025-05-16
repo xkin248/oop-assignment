@@ -2,7 +2,7 @@ from flask import Flask
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your-very-secret-key'  # Change in production!
+    app.config['SECRET_KEY'] = 'hello'  # Change in production!
 
     # Register blueprints
     from python.routes.auth import auth_bp
