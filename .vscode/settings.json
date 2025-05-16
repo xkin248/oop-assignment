@@ -18,5 +18,11 @@
     ],
     "appService.defaultWebAppToDeploy": "/subscriptions/e3b174b8-b1b4-4f07-b0de-2ccc3eb50866/resourceGroups/sarawaktourism/providers/Microsoft.Web/sites/sarawaktourism",
     "appService.deploySubpath": ".",
-    "azureFunctions.templateFilter": "Verified"
+    "azureFunctions.templateFilter": "Verified",
+    "azureFunctions.deploySubpath": ".",
+    "azureFunctions.scmDoBuildDuringDeployment": true,
+    "azureFunctions.pythonVenv": "venv",
+    "azureFunctions.projectLanguage": "Python",
+    "azureFunctions.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen"
 }

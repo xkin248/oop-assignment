@@ -1,28 +1,27 @@
-# db.py
-
+import mysql.connector
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
-# Load environment variables
-DB_USER = os.environ.get("DB_USER")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
-DB_HOST = os.environ.get("DB_HOST")
-DB_NAME = os.environ.get("DB_NAME")
-SSL_CERT = os.environ.get("SSL_CERT", "DigiCertGlobalRootCA.crt.pem")
+def get_db_connection():
+    conn = mysql.connector.connect(
+        host=os.environ.get("MYSQL_HOST", "sarawaktourismdb.mysql.database.azure.com"),
+        user=os.environ.get("MYSQL_USER", "Henry@sarawaktourismdb"),
+        password=os.environ.get("MYSQL_PASSWORD", "Mesopro123"),
+        database=os.environ.get("MYSQL_DATABASE", "sarawaktourismdb"),
+        port=int(os.environ.get("MYSQL_PORT", "3306")),
+        ssl_ca=os.environ.get("MYSQL_SSL_CA", "DigiCertGlobalRootCA.crt.pem"),
+        ssl_disabled=False
+    )
+    return conn
 
-# Build MySQL connection string with SSL
-connection_string = (
-    f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-    f"?ssl_ca={SSL_CERT}"
-)
-
-# Create SQLAlchemy engine and session
-engine = create_engine(connection_string, echo=False)
-SessionLocal = sessionmaker(bind=engine)
-
-# Optional: function to run raw SQL queries
-def query_db(query, params=(), fetch_one=False):
-    with engine.connect() as conn:
-        result = conn.execute(query, params)
-        return result.fetchone() if fetch_one else result.fetchall()
+def query_db(query, args=(), fetch_one=False, commit=False):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(query, args)
+    if commit:
+        conn.commit()
+        rv = cursor.lastrowid
+    else:
+        rv = cursor.fetchone() if fetch_one else cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return rv
