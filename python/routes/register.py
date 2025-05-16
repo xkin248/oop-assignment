@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from utils.db import query_db
+from python.utils.dp2 import query_db
 from flask_bcrypt import Bcrypt
 import mysql.connector
 
