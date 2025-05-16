@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from python.utils.dp2 import query_db
+from utils.db1 import query_db
 from flask_bcrypt import Bcrypt
 
 auth_bp = Blueprint('auth', __name__)
@@ -22,7 +22,7 @@ def login():
         if user and bcrypt.check_password_hash(user['password'], password):
             session['user_id'] = user['id']
             flash('Login successful!', 'success')  # Flash success message
-            return redirect(url_for('dashboard.dashboard'))
+            return redirect(url_for('ui.main_dashboard'))  # Redirect to main dashboard
         else:
             flash('Invalid email/username or password', 'danger')  # Flash error message
 

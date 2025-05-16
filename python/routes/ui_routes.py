@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from python.utils.dp2 import query_db
+from utils.db1 import query_db
 
 ui_bp = Blueprint('ui', __name__)
 
