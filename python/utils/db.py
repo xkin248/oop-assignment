@@ -1,12 +1,12 @@
 import mysql.connector
 import os
 config = {
-  "user": "",
-  "password": "",
-  "host": "",
+  "user": "Henry@stdb3",
+  "password": "Hello123",
+  "host": "stdb3.mysql.database.azure.com",
   "port": 3306,
-  "database": "mysql",
-  "ssl_ca": "{path to the .pem file downloaded from Azure}",
+  "database": "sarawk_tourism",
+  "ssl_ca": "{oop/-assignment/python/static/DigiCertGlobalRootCA.crt.pem}",
   "ssl_disabled": False
 }
 
