@@ -23,7 +23,7 @@ def register():
         hashed_password = generate_password_hash(password)
         # Check if user exists
         user_exists = query_db(
-            "SELECT id FROM Users WHERE username=%s OR email=%s",
+            "SELECT id FROM dbo.Users WHERE username=%s OR email=%s",
             (username, email),
             fetch_one=True
         )
@@ -33,7 +33,7 @@ def register():
 
         # Insert new user
         query_db(
-            "INSERT INTO Users (username, email, password) VALUES (%s, %s, %s)",
+            "INSERT INTO dbo.Users (username, email, password) VALUES (%s, %s, %s)",
             (username, email, hashed_password),
             commit=True
         )
