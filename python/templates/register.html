@@ -11,6 +11,19 @@
         <h2 class="text-2xl font-bold mb-4 text-center">Create an Account</h2>
         <form action="/register" method="POST">
             <input type="text" name="username" placeholder="Username" class="input-field w-full mb-4 p-2 border rounded" required>
+                    <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Gender</label>
+                <div class="flex space-x-4">
+                    <label class="flex items-center">
+                        <input type="radio" name="gender" value="male" class="form-radio text-blue-500" required>
+                        <span class="ml-2">Male</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="gender" value="female" class="form-radio text-pink-500" required>
+                        <span class="ml-2">Female</span>
+                    </label>
+                </div>
+            </div>
             <input type="email" name="email" placeholder="Email" class="input-field w-full mb-4 p-2 border rounded" required>
             <input type="password" name="password" placeholder="Password" class="input-field w-full mb-4 p-2 border rounded" required>
             <input type="password" name="confirmPassword" placeholder="Confirm Password" class="input-field w-full mb-4 p-2 border rounded" required>
