@@ -4,4 +4,4 @@ home_bp = Blueprint('home', __name__)
 
 @home_bp.route('/')
 def home():
-    return redirect(url_for('auth.login'))  # Redirect to the login page
+    return redirect(url_for('login.login'))  # Correct blueprint endpoint

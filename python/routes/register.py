@@ -1,41 +1,33 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from utils.db import query_db
-from flask_bcrypt import Bcrypt
-import mysql.connector
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
+from werkzeug.security import generate_password_hash
+from .models import db, User
 
-register_bp = Blueprint('register', __name__)
-bcrypt = Bcrypt()
+register_bp = Blueprint('register_bp', __name__)
 
 @register_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Ensure the form contains the expected keys
-        if 'username' not in request.form or 'email' not in request.form or 'password' not in request.form:
-            flash('Invalid form submission.', 'danger')
-            return redirect(url_for('register.register'))
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirmPassword')
 
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        if not username or not email or not password or not confirm_password:
+            flash('All fields are required.', 'danger')
+            return render_template('register.html')
 
-        # Check if username or email already exists
-        existing_user = query_db("SELECT * FROM Users WHERE username = %s OR email = %s", (username, email), fetch_one=True)
-        if existing_user:
-            if existing_user['username'] == username:
-                flash('Username already exists. Please choose a different one.', 'danger')
-            elif existing_user['email'] == email:
-                flash('Email already exists. Please use a different one.', 'danger')
-            return redirect(url_for('register.register'))
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return render_template('register.html')
 
-        # Insert the new user into the database
-        query = "INSERT INTO Users (username, email, password) VALUES (%s, %s, %s)"
-        try:
-            query_db(query, (username, email, hashed_password))
-            flash('Registration successful! Please log in.', 'success')
-            return redirect(url_for('auth.login'))
-        except mysql.connector.Error as e:
-            flash(f'An error occurred: {e}', 'danger')
-            return redirect(url_for('register.register'))
+        if User.query.filter((User.username == username) | (User.email == email)).first():
+            flash('Username or email already exists.', 'danger')
+            return render_template('register.html')
 
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, email=email, password_hash=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Registration successful! Please log in.', 'success')
+        return redirect(url_for('login_bp.login'))
     return render_template('register.html')
