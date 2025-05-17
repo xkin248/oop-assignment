@@ -8,7 +8,7 @@ def get_db_connection():
         host=os.environ.get("MYSQL_HOST", "stdb3.mysql.database.azure.com"),
         user=os.environ.get("MYSQL_USER", "Henry@stdb3"),
         password=os.environ.get("MYSQL_PASSWORD", "Hello123"),
-        database=os.environ.get("MYSQL_DATABASE", "sarwak_tourism"),
+        database=os.environ.get("MYSQL_DATABASE", "stdb3"),
         port=int(os.environ.get("MYSQL_PORT", "3306")),
         ssl_ca=ssl_ca,
         ssl_verify_cert=True
