@@ -1,14 +1,15 @@
 import mysql.connector
 from mysql.connector import Error
 
-config = {
-    "user": "Henry@stdb3",
-    "password": "Hello123",
-    "host": "stdb3.mysql.database.azure.com",
-    "port": 3306,
-    "database": "sarawk_tourism",
-    "ssl_ca": "/workspaces/oop-assignment/python/static/DigiCertGlobalRootCA.crt.pem",
-    "ssl_disabled": False
+conn_str = (
+    "Driver={ODBC Driver 18 for SQL Server};"
+    "Server=tcp:stdbst.database.windows.net,1433;"
+    "Database=STDB;"
+    "Uid=Henry;"
+    "Pwd=Hello123;"
+    "Encrypt=yes;"
+    "TrustServerCertificate=no;"
+    "Connection Timeout=30;"
 }
 
 def create_connection():
