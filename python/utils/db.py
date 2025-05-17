@@ -11,12 +11,31 @@ config = {
     "ssl_disabled": False
 }
 
+def create_connection():
+    try:
+        connection = mysql.connector.connect(
+            host='stdb3.mysql.database.azure.com',
+            user='Henry@stdb3',
+            password='Hello123',
+            database='sarawak_tourism',
+            ssl_ca='/workspaces/oop-assignment/python/static/DigiCertGlobalRootCA.crt.pem'
+        )
+        if connection.is_connected():
+            return connection
+    except Error as e:
+        print(f"Error: {e}")
+        return None
+
+def close_connection(connection):
+    if connection and connection.is_connected():
+        connection.close()
+
 def get_db_connection():
     try:
         conn = mysql.connector.connect(**config)
         return conn
     except Error as e:
-        print("MySQL 连接错误:", e)
+        print("MySQL connection error:", e)
         return None
 
 def query_db(query, args=(), fetch_one=False, commit=False):
@@ -26,10 +45,10 @@ def query_db(query, args=(), fetch_one=False, commit=False):
         return None
     cursor = conn.cursor(dictionary=True)
     cursor.execute(query, args)
-    if commit:                 # 对于写操作提交
+    if commit:                 
         conn.commit()
-        rv = cursor.lastrowid   # 返回插入行 id
-    else:                      # 读操作返回记录
+        rv = cursor.lastrowid   
+    else:                      
         rv = cursor.fetchone() if fetch_one else cursor.fetchall()
     cursor.close()
     conn.close()
