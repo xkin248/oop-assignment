@@ -1,29 +1,36 @@
 import mysql.connector
 import os
+config = {
+  "user": "",
+  "password": "",
+  "host": "",
+  "port": 3306,
+  "database": "mysql",
+  "ssl_ca": "{path to the .pem file downloaded from Azure}",
+  "ssl_disabled": False
+}
 
-def get_db_connection():
-    # Path to the Azure CA certificate (update this path as needed)
-    ssl_ca = os.environ.get("MYSQL_SSL_CA", "/path/to/BaltimoreCyberTrustRoot.crt.pem")
-    conn = mysql.connector.connect(
-        host=os.environ.get("MYSQL_HOST", "stdb3.mysql.database.azure.com"),
-        user=os.environ.get("MYSQL_USER", "Henry@stdb3"),
-        password=os.environ.get("MYSQL_PASSWORD", "Hello123"),
-        database=os.environ.get("MYSQL_DATABASE", "stdb3"),
-        port=int(os.environ.get("MYSQL_PORT", "3306")),
-        ssl_ca=ssl_ca,
-        ssl_verify_cert=True
-    )
-    return conn
 
-def query_db(query, args=(), fetch_one=False, commit=False):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute(query, args)
-    if commit:
-        conn.commit()
-        rv = cursor.lastrowid
+try:
+    # Try to establish a connection
+    cnx = mysql.connector.connect(**config)
+    
+    # Check if the connection is successful
+    if cnx.is_connected():
+        print("Connection successful!")
+        
+        # Execute a simple query to test the connection
+        cursor = cnx.cursor()
+        cursor.execute("SELECT 1")
+        result = cursor.fetchone()
+        print("Query result:", result)
+        
     else:
-        rv = cursor.fetchone() if fetch_one else cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return rv
+        print("Connection failed.")
+        
+except mysql.connector.Error as e:
+    print("Error connecting to MySQL database:", e)
+    
+finally:
+    # Close the connection
+    cnx.close()
