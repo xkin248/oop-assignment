@@ -5,7 +5,7 @@ from routes.models import db
 from dotenv import load_dotenv
 
 load_dotenv()
-
+app = Flask(__name__)
 # Flask app setup
 def create_app():
     app = Flask(__name__)
