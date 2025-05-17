@@ -1,8 +1,6 @@
 import pyodbc
-import bcrypt
-from datetime import datetime
 
-# --- Database Connection ---
+# --- Configuration ---
 conn_str = (
     "Driver={ODBC Driver 18 for SQL Server};"
     "Server=tcp:stdbst.database.windows.net,1433;"
@@ -14,37 +12,55 @@ conn_str = (
     "Connection Timeout=30;"
 )
 
-# --- User Registration Data ---
-username = "john_doe"
-email = "john@example.com"
-password_plain = "securepassword123"
-gender = "male"  # Ensure your app enforces values like: 'male', 'female', 'other'
+def create_connection():
+    try:
+        connection = pyodbc.connect(conn_str)
+        return connection
+    except Exception as e:
+        print(f"Error connecting to database: {e}")
+        return None
 
-# --- Hash Password ---
-password_hashed = bcrypt.hashpw(password_plain.encode(), bcrypt.gensalt()).decode()
+def close_connection(connection):
+    if connection:
+        connection.close()
 
-# --- Current Time (for created_at) ---
-created_at = datetime.now()
-
-# --- Insert into SQL Server ---
-try:
-    conn = pyodbc.connect(conn_str)
+def query_db(query, args=(), fetch_one=False, commit=False):
+    """
+    Execute a SQL query. 
+    - For SELECT: returns list of dicts (or single dict if fetch_one=True)
+    - For INSERT/UPDATE/DELETE: returns lastrowid if commit=True, else nothing
+    """
+    conn = create_connection()
+    if not conn:
+        return None
     cursor = conn.cursor()
-
-    cursor.execute("""
-        INSERT INTO dbo.Users (username, email, password, gender, created_at)
-        VALUES (?, ?, ?, ?, ?)
-    """, (username, email, password_hashed, gender, created_at))
-
-    conn.commit()
-    print("✅ User registered successfully.")
-
-except pyodbc.IntegrityError as e:
-    print("❌ Registration failed: Username or email might already exist.")
-except Exception as e:
-    print("❌ Registration error:", e)
-finally:
-    if 'cursor' in locals():
+    try:
+        cursor.execute(query, args)
+        if commit:
+            conn.commit()
+            try:
+                # For SQL Server, get last inserted ID
+                cursor.execute("SELECT SCOPE_IDENTITY()")
+                row = cursor.fetchone()
+                return row[0] if row else None
+            except Exception:
+                return None
+        else:
+            columns = [column[0] for column in cursor.description] if cursor.description else []
+            if fetch_one:
+                row = cursor.fetchone()
+                if not row:
+                    return None
+                return dict(zip(columns, row))
+            else:
+                rows = cursor.fetchall()
+                return [dict(zip(columns, r)) for r in rows]
+    except pyodbc.IntegrityError:
+        print("Integrity error: likely duplicate key/unique constraint.")
+        return None
+    except Exception as e:
+        print(f"Database query error: {e}")
+        return None
+    finally:
         cursor.close()
-    if 'conn' in locals():
         conn.close()
