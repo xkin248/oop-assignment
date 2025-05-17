@@ -16,16 +16,21 @@ def get_db_connection():
         conn = mysql.connector.connect(**config)
         return conn
     except Error as e:
-        print("Error connecting to MySQL database:", e)
+        print("MySQL 连接错误:", e)
         return None
 
-def query_db(query, args=(), fetch_one=False):
+def query_db(query, args=(), fetch_one=False, commit=False):
+    """SELECT / INSERT / UPDATE"""
     conn = get_db_connection()
     if not conn:
         return None
     cursor = conn.cursor(dictionary=True)
     cursor.execute(query, args)
-    rv = cursor.fetchone() if fetch_one else cursor.fetchall()
+    if commit:                 # 对于写操作提交
+        conn.commit()
+        rv = cursor.lastrowid   # 返回插入行 id
+    else:                      # 读操作返回记录
+        rv = cursor.fetchone() if fetch_one else cursor.fetchall()
     cursor.close()
     conn.close()
     return rv
