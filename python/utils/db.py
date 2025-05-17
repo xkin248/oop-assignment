@@ -15,6 +15,7 @@ def create_connection():
     try:
         connection = mysql.connector.connect(
             host='stdb3.mysql.database.azure.com',
+            port=3306,
             user='Henry@stdb3',
             password='Hello123',
             database='sarawak_tourism',
