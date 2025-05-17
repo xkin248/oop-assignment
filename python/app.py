@@ -1,34 +1,14 @@
 import os
+from flask import Flask
 from flask_bcrypt import Bcrypt
-from flask import Flask, render_template, session, redirect, url_for, flash
-from routes.models import db
+from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 
+# Load environment variables from .env (only in local dev)
 load_dotenv()
-app = Flask(__name__)
+
 # Flask app setup
-def create_app():
-    app = Flask(__name__)
-
-    MYSQL_USER = os.environ.get('MYSQL_USER')
-    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
-    MYSQL_HOST = os.environ.get('MYSQL_HOST')
-    MYSQL_PORT = os.environ.get('MYSQL_PORT', 3306)
-    MYSQL_DB = os.environ.get('MYSQL_DB')
-    MYSQL_SSL_CA = os.environ.get('MYSQL_SSL_CA')
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = (
-        f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
-        f"?ssl_ca={MYSQL_SSL_CA}"
-    )
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.secret_key = SECRET_KEY
-
-    db.init_app(app)
-    return app
-
-app = create_app()
+app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 # Register routes
