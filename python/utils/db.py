@@ -2,13 +2,16 @@ import mysql.connector
 import os
 
 def get_db_connection():
+    # Path to the Azure CA certificate (update this path as needed)
+    ssl_ca = os.environ.get("MYSQL_SSL_CA", "/path/to/BaltimoreCyberTrustRoot.crt.pem")
     conn = mysql.connector.connect(
         host=os.environ.get("MYSQL_HOST", "stdb3.mysql.database.azure.com"),
         user=os.environ.get("MYSQL_USER", "Henry@stdb3"),
         password=os.environ.get("MYSQL_PASSWORD", "Hello123"),
         database=os.environ.get("MYSQL_DATABASE", "sarwak_tourism"),
         port=int(os.environ.get("MYSQL_PORT", "3306")),
-        ssl_disabled=False
+        ssl_ca=ssl_ca,
+        ssl_verify_cert=True
     )
     return conn
 
