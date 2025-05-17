@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
+from sqlalchemy import create_engine, text
 
 # Flask app setup
 app = Flask(__name__)
