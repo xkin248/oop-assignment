@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash
-from utils.db import create_connection, close_connection
+from utils.db import query_db
 
 login_bp = Blueprint('login', __name__)
 
@@ -13,21 +13,15 @@ def login():
             flash('Username/email and password are required.', 'danger')
             return redirect(url_for('login.login'))
 
-        conn = create_connection()
-        if conn:
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute(
-                "SELECT * FROM Users WHERE username=%s OR email=%s",
-                (identifier, identifier)
-            )
-            user = cursor.fetchone()
-            close_connection(conn)
-            if user and check_password_hash(user['password'], password):
-                session['user_id'] = user['id']
-                flash('Login successful!', 'success')
-                return redirect(url_for('ui.main_dashboard'))
-            else:
-                flash('Invalid email/username or password.', 'danger')
+        user = query_db(
+            "SELECT * FROM Users WHERE username=%s OR email=%s",
+            (identifier, identifier),
+            fetch_one=True
+        )
+        if user and check_password_hash(user['password'], password):
+            session['user_id'] = user['id']
+            flash('Login successful!', 'success')
+            return redirect(url_for('ui.main_dashboard'))
         else:
-            flash('Database connection error.', 'danger')
+            flash('Invalid email/username or password.', 'danger')
     return render_template('Login.html')
