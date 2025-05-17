@@ -30,4 +30,4 @@ def login():
                 flash('Invalid email/username or password.', 'danger')
         else:
             flash('Database connection error.', 'danger')
-    return render_template('login.html')
+    return render_template('Login.html')
