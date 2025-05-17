@@ -1,6 +1,6 @@
-import mysql.connector
-from mysql.connector import Error
+import pyodbc
 
+# --- Configuration ---
 conn_str = (
     "Driver={ODBC Driver 18 for SQL Server};"
     "Server=tcp:stdbst.database.windows.net,1433;"
@@ -10,48 +10,57 @@ conn_str = (
     "Encrypt=yes;"
     "TrustServerCertificate=no;"
     "Connection Timeout=30;"
-}
+)
 
 def create_connection():
     try:
-        connection = mysql.connector.connect(
-            host='stdb3.mysql.database.azure.com',
-            port=3306,
-            user='Henry@stdb3',
-            password='Hello123',
-            database='sarawak_tourism',
-            ssl_ca='/workspaces/oop-assignment/python/static/DigiCertGlobalRootCA.crt.pem'
-        )
-        if connection.is_connected():
-            return connection
-    except Error as e:
-        print(f"Error: {e}")
+        connection = pyodbc.connect(conn_str)
+        return connection
+    except Exception as e:
+        print(f"Error connecting to database: {e}")
         return None
 
 def close_connection(connection):
-    if connection and connection.is_connected():
+    if connection:
         connection.close()
 
-def get_db_connection():
-    try:
-        conn = mysql.connector.connect(**config)
-        return conn
-    except Error as e:
-        print("MySQL connection error:", e)
-        return None
-
 def query_db(query, args=(), fetch_one=False, commit=False):
-    """SELECT / INSERT / UPDATE"""
-    conn = get_db_connection()
+    """
+    Execute a SQL query. 
+    - For SELECT: returns list of dicts (or single dict if fetch_one=True)
+    - For INSERT/UPDATE/DELETE: returns lastrowid if commit=True, else nothing
+    """
+    conn = create_connection()
     if not conn:
         return None
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute(query, args)
-    if commit:                 
-        conn.commit()
-        rv = cursor.lastrowid   
-    else:                      
-        rv = cursor.fetchone() if fetch_one else cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return rv
+    cursor = conn.cursor()
+    try:
+        cursor.execute(query, args)
+        if commit:
+            conn.commit()
+            try:
+                # For SQL Server, get last inserted ID
+                cursor.execute("SELECT SCOPE_IDENTITY()")
+                row = cursor.fetchone()
+                return row[0] if row else None
+            except Exception:
+                return None
+        else:
+            columns = [column[0] for column in cursor.description] if cursor.description else []
+            if fetch_one:
+                row = cursor.fetchone()
+                if not row:
+                    return None
+                return dict(zip(columns, row))
+            else:
+                rows = cursor.fetchall()
+                return [dict(zip(columns, r)) for r in rows]
+    except pyodbc.IntegrityError:
+        print("Integrity error: likely duplicate key/unique constraint.")
+        return None
+    except Exception as e:
+        print(f"Database query error: {e}")
+        return None
+    finally:
+        cursor.close()
+        conn.close()
