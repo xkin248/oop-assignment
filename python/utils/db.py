@@ -1,6 +1,4 @@
 import pyodbc
-import bcrypt
-from datetime import datetime
 
 # --- Configuration ---
 conn_str = (
