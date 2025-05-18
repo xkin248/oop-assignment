@@ -33,7 +33,7 @@ def new_appointment():
     return render_template('Add_New_Appointment.html')
 
 @ui_bp.route('/appointment-list')
-def today_appointment():
+def appointment-list():
     user_id = session.get('user_id')  # Ensure the user is logged in
 
     if not user_id:
@@ -61,7 +61,7 @@ def history_appointments():
 
     # Fetch all past appointments for the logged-in user
     query = """
-        SELECT * FROM Appointments
+        SELECT * FROM dbo.Appointments
         WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
         ORDER BY appointment_date DESC, appointment_time DESC
     """
