@@ -24,7 +24,7 @@ def add_appointment():
         # Insert the appointment into the database with a default status of "Pending"
         query = """
             INSERT INTO Appointments (user_id, appointment_date, appointment_time, description, location, status)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            VALUES (?, ?, ?, ?, ?, ?)
         """
         query_db(query, (user_id, appointment_date, appointment_time, description, location, 'Pending'))
         flash('Appointment added successfully! Redirecting to Today Appointment.', 'success')
@@ -43,7 +43,7 @@ def today_appointment():
     # Fetch today's appointments for the logged-in user
     query = """
         SELECT * FROM Appointments
-        WHERE user_id = %s AND appointment_date = CURDATE()
+        WHERE user_id = ? AND appointment_date = CAST(GETDATE() AS DATE)
         ORDER BY appointment_time ASC
     """
     appointments = query_db(query, (user_id,))
@@ -62,7 +62,7 @@ def history_appointments():
     # Fetch all past appointments for the logged-in user
     query = """
         SELECT * FROM Appointments
-        WHERE user_id = %s AND appointment_date < CURDATE()
+        WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
