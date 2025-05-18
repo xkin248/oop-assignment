@@ -3,6 +3,10 @@ from utils.db import query_db
 
 ui_bp = Blueprint('ui', __name__)
 
+@ui_bp.route('/logout')
+def account_settings():
+    return render_template('Logout.html')
+
 @ui_bp.route('/new-appointment', methods=['GET', 'POST'])
 def new_appointment():
     if request.method == 'POST':
