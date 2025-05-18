@@ -24,10 +24,10 @@ def new_appointment():
 
         # Insert the appointment into the database with a default status of "Pending"
         query = """
-            INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO dbo.Appointments (title, appointment_date, appointment_time, location, description, status)
+            VALUES (?, ?, ?, ?, ?, ?)
         """
-        query_db(query, (user_id, title, appointment_date, appointment_time, location, description, 'Pending'), commit=True)
+        query_db(query, (title, appointment_date, appointment_time, location, description, 'Pending'), commit=True)
         flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
         return redirect(url_for('ui.today_appointment'))
 
