@@ -1,42 +1,37 @@
-from flask import Blueprint, request, render_template, redirect, url_for, flash
-from werkzeug.security import generate_password_hash
+from flask import Flask, render_template, request, redirect, flash
 from utils.db import query_db
 
-register_bp = Blueprint('register_bp', __name__)
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Needed for flash messages
 
-@register_bp.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        confirm_password = request.form.get('confirmPassword')
+        username = request.form['username']
+        gender = request.form['gender']
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirmPassword']
 
-        if not username or not email or not password or not confirm_password:
-            flash('All fields are required.', 'danger')
-            return render_template('register.html')
-
+        # Basic validation
         if password != confirm_password:
-            flash('Passwords do not match.', 'danger')
+            flash('Passwords do not match.')
             return render_template('register.html')
 
-        hashed_password = generate_password_hash(password)
-        # Check if user exists
-        user_exists = query_db(
-            "SELECT id FROM dbo.Users WHERE username=%s OR email=%s",
-            (username, email),
-            fetch_one=True
-        )
-        if user_exists:
-            flash('Username or email already exists.', 'danger')
+        # Insert into DB
+        insert_query = """
+            INSERT INTO users (username, gender, email, password)
+            VALUES (?, ?, ?, ?)
+        """
+        result = query_db(insert_query, (username, gender, email, password), commit=True)
+        if result:
+            flash('Registration successful! Please log in.')
+            return redirect('/')
+        else:
+            flash('Registration failed. Email or username may already exist.')
             return render_template('register.html')
 
-        # Insert new user
-        query_db(
-            "INSERT INTO dbo.Users (username, email, password) VALUES (%s, %s, %s)",
-            (username, email, hashed_password),
-            commit=True
-        )
-        flash('Registration successful! Please log in.', 'success')
-        return redirect(url_for('login.login'))
     return render_template('register.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
