@@ -27,6 +27,7 @@ def new_appointment():
             INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """
+        print("Inserting:", user_id, title, appointment_date, appointment_time, location, description)
         query_db(query, (user_id, title, appointment_date, appointment_time, location, description, 'Pending'), commit=True)
         flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
         return redirect(url_for('ui.today_appointment'))
