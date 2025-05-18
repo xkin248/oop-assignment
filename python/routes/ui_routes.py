@@ -69,31 +69,3 @@ def history_appointments():
     print("History Appointments:", appointments)  # Debug statement
 
     return render_template('AS_HistoryAppointment.html', appointments=appointments)
-
-@ui_bp.route('/payment-services')
-def payment_services():
-    return render_template('AS_PayAndService.html')
-
-@ui_bp.route('/preferences')
-def preferences():
-    return render_template('AS_Preferences.html')
-
-@ui_bp.route('/privacy')
-def privacy():
-    return render_template('AS_Privacy.html')
-
-@ui_bp.route('/security')
-def security():
-    return render_template('AS_Security.html')
-
-@ui_bp.route('/main-dashboard')
-def main_dashboard():
-    return render_template('main_dashboard.html')
-
-@ui_bp.route('/profile-create')
-def profile_create():
-    return render_template('profile_create.html')
-
-@ui_bp.route('/qr-code')
-def qr_code():
-    return render_template('QR_Code.html')
