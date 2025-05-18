@@ -66,6 +66,10 @@ def history_appointments():
 
     return render_template('AS_HistoryAppointment.html', appointments=appointments)
 
+@ui_bp.route('/main-dashboard')
+def main_dashboard():
+    return render_template('main_dashboard.html')
+
 @ui_bp.route('/profile-create')
 def profile_create():
     return render_template('profile_create.html')
