@@ -1,4 +1,3 @@
-register:
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash
 from utils.db import query_db
