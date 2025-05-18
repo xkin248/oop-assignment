@@ -20,6 +20,7 @@ def new_appointment():
 
         if not title:
             flash('Title is required to add an appointment.', 'danger')
+            # Redirect to the new appointment page
             return redirect(url_for('ui.new_appointment'))
 
         # Insert the appointment into the database with a default status of "Pending"
