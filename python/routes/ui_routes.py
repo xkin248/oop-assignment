@@ -3,30 +3,26 @@ from utils.db import query_db
 
 ui_bp = Blueprint('ui', __name__)
 
-@ui_bp.route('/logout')
-def account_settings():
-    return render_template('Logout.html')
-
 @ui_bp.route('/new-appointment', methods=['GET', 'POST'])
 def new_appointment():
     if request.method == 'POST':
         # Get form data
-        user_id = session.get('user_id')  # Ensure the user is logged in
+        title = request.form.get('title')  # Changed from user_id to title
         appointment_date = request.form.get('appointment_date')
         appointment_time = request.form.get('appointment_time')
         description = request.form.get('description')
         location = request.form.get('location')
 
-        if not user_id:
-            flash('You must be logged in to add an appointment.', 'danger')
-            return redirect(url_for('auth.login'))
+        if not title:
+            flash('Title is required to add an appointment.', 'danger')
+            return redirect(url_for('ui.new_appointment'))
 
         # Insert the appointment into the database with a default status of "Pending"
         query = """
-            INSERT INTO dbo.Appointments (user_id, appointment_date, appointment_time, description, location, status)
+            INSERT INTO dbo.Appointments (title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?)
         """
-        query_db(query, (user_id, appointment_date, appointment_time, description, location, 'Pending'))
+        query_db(query, (title, appointment_date, appointment_time, location, description, 'Pending'))
         flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
         return redirect(url_for('ui.today_appointment'))
 
