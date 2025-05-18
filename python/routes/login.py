@@ -14,7 +14,7 @@ def login():
             return redirect(url_for('login.login'))
 
         user = query_db(
-            "SELECT * FROM dbo.Users WHERE username=%s OR email=%s",
+            "SELECT * FROM dbo.Users WHERE username=? OR email=?",
             (identifier, identifier),
             fetch_one=True
         )
