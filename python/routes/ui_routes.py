@@ -3,10 +3,6 @@ from utils.db import query_db
 
 ui_bp = Blueprint('ui', __name__)
 
-@ui_bp.route('/account-settings')
-def account_settings():
-    return render_template('Account_Setting.html')
-
 @ui_bp.route('/new-appointment', methods=['GET', 'POST'])
 def new_appointment():
     if request.method == 'POST':
@@ -69,3 +65,7 @@ def history_appointments():
     print("History Appointments:", appointments)  # Debug statement
 
     return render_template('AS_HistoryAppointment.html', appointments=appointments)
+
+@ui_bp.route('/profile-create')
+def profile_create():
+    return render_template('profile_create.html')
