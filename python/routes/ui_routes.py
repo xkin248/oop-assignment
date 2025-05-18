@@ -23,7 +23,7 @@ def new_appointment():
 
         # Insert into database
         query = """
-            INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
+            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         query_db(
