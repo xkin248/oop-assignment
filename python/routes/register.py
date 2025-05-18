@@ -1,3 +1,4 @@
+register:
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash
 from utils.db import query_db
@@ -23,7 +24,7 @@ def register():
         hashed_password = generate_password_hash(password)
         # Check if user exists
         user_exists = query_db(
-            "SELECT id FROM dbo.Users WHERE username=%s OR email=%s",
+            "SELECT id FROM dbo.Users WHERE username=? OR email=?",
             (username, email),
             fetch_one=True
         )
@@ -33,7 +34,7 @@ def register():
 
         # Insert new user
         query_db(
-            "INSERT INTO dbo.Users (username, email, password) VALUES (%s, %s, %s)",
+            "INSERT INTO dbo.Users (username, email, password) VALUES (?, ?, ?)",
             (username, email, hashed_password),
             commit=True
         )
