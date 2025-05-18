@@ -7,22 +7,22 @@ ui_bp = Blueprint('ui', __name__)
 def new_appointment():
     if request.method == 'POST':
         # Get form data
-        title = request.form.get('title')  # Changed from user_id to title
+        user_id = session.get('user_id')  # Ensure the user is logged in
         appointment_date = request.form.get('appointment_date')
         appointment_time = request.form.get('appointment_time')
         description = request.form.get('description')
         location = request.form.get('location')
 
-        if not title:
-            flash('Title is required to add an appointment.', 'danger')
-            return redirect(url_for('ui.new_appointment'))
+        if not user_id:
+            flash('You must be logged in to add an appointment.', 'danger')
+            return redirect(url_for('auth.login'))
 
         # Insert the appointment into the database with a default status of "Pending"
         query = """
-            INSERT INTO dbo.Appointments (title, appointment_date, appointment_time, location, description, status)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """
-        query_db(query, (title, appointment_date, appointment_time, location, description, 'Pending'))
+        query_db(query, (user_id, '', appointment_date, appointment_time, location, description, 'Pending'))
         flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
         return redirect(url_for('ui.today_appointment'))
 
