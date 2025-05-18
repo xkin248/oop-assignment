@@ -19,14 +19,6 @@ def login():
             fetch_one=True
         )
         print("Queried user:", user)  # Debug line
-        # After fetching user
-        if user and isinstance(user, tuple):
-            user = {
-                'id': user[0],
-                'username': user[1],
-                'email': user[2],
-                'password': user[3]
-            }
 
         if user and check_password_hash(user['password'], password):
             session['user_id'] = user['id']
