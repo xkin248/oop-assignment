@@ -15,7 +15,7 @@ def new_appointment():
 
         if not user_id:
             flash('You must be logged in to add an appointment.', 'danger')
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('login.login'))
 
         if not title:
             flash('Title is required to add an appointment.', 'danger')
@@ -81,3 +81,8 @@ def main_dashboard():
 @ui_bp.route('/profile-create')
 def profile_create():
     return render_template('profile_create.html')
+
+@ui_bp.route('/logout')
+def profile_create():
+    return render_template('Logout.html')
+
