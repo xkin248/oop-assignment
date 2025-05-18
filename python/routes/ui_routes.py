@@ -7,8 +7,8 @@ ui_bp = Blueprint('ui', __name__)
 def account_settings():
     return render_template('Account_Setting.html')
 
-@ui_bp.route('/add-appointment', methods=['GET', 'POST'])
-def add_appointment():
+@ui_bp.route('/new-appointment', methods=['GET', 'POST'])
+def new_appointment():
     if request.method == 'POST':
         # Get form data
         user_id = session.get('user_id')  # Ensure the user is logged in
@@ -23,16 +23,16 @@ def add_appointment():
 
         # Insert the appointment into the database with a default status of "Pending"
         query = """
-            INSERT INTO Appointments (user_id, appointment_date, appointment_time, description, location, status)
+            INSERT INTO dbo.Appointments (user_id, appointment_date, appointment_time, description, location, status)
             VALUES (?, ?, ?, ?, ?, ?)
         """
         query_db(query, (user_id, appointment_date, appointment_time, description, location, 'Pending'))
-        flash('Appointment added successfully! Redirecting to Today Appointment.', 'success')
+        flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
         return redirect(url_for('ui.today_appointment'))
 
     return render_template('Add_New_Appointment.html')
 
-@ui_bp.route('/today-appointment')
+@ui_bp.route('/appointment-list')
 def today_appointment():
     user_id = session.get('user_id')  # Ensure the user is logged in
 
@@ -42,7 +42,7 @@ def today_appointment():
 
     # Fetch today's appointments for the logged-in user
     query = """
-        SELECT * FROM Appointments
+        SELECT * FROM dbo.Appointments
         WHERE user_id = ? AND appointment_date = CAST(GETDATE() AS DATE)
         ORDER BY appointment_time ASC
     """
