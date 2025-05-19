@@ -17,11 +17,19 @@
                     <p class="text-gray-600 mt-2"><strong>Date:</strong> {{ appointment.appointment_date }}</p>
                     <p class="text-gray-600"><strong>Time:</strong> {{ appointment.appointment_time }}</p>
                     <p class="text-gray-600"><strong>Location:</strong> {{ appointment.location }}</p>
+                    <p class="text-gray-600"><strong>Status:</strong> {{ appointment.status }}</p>
                 </div>
             {% endfor %}
         {% else %}
             <p class="text-center text-gray-500">No past appointments found.</p>
         {% endif %}
+    </div>
+
+    <!-- Return to Dashboard Button -->
+    <div class="mt-8">
+        <a href="{{ url_for('ui.main_dashboard') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300">
+            Return to Dashboard
+        </a>
     </div>
 </body>
 </html>
