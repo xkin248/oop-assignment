@@ -21,7 +21,6 @@ def new_appointment():
             flash('Title is required to add an appointment.', 'danger')
             return redirect(url_for('ui.new_appointment'))
 
-        user_id = session.get('user_id')
         # Insert into database
         query = """
             INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
