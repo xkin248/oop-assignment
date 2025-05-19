@@ -22,7 +22,7 @@ def new_appointment():
             return redirect(url_for('ui.new_appointment'))
 
         query = """
-            INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
+            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         query_db(
@@ -53,10 +53,6 @@ def history_appointments():
 @ui_bp.route('/main-dashboard')
 def main_dashboard():
     return render_template('main_dashboard.html')
-
-@ui_bp.route('/profile-create')
-def profile_create():
-    return render_template('profile_create.html')
 
 @ui_bp.route('/logout-confirm')
 def logout_confirm():
