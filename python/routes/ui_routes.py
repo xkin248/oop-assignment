@@ -60,6 +60,8 @@ def list_appointment():
 def main_dashboard():
     return render_template('main_dashboard.html')
 
-@ui_bp.route('/logout-confirm')
-def logout_confirm():
-    return render_template('LogOut.html')
+@ui_bp.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('login.login'))
