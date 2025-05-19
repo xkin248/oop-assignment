@@ -36,7 +36,7 @@ def new_appointment():
 
     return render_template('Add_New_Appointment.html')
 
-@ui_bp.route('/appointments-list')
+@ui_bp.route('/appointment-list')
 def history_appointments():
     user_id = session.get('user_id')  # Ensure the user is logged in
 
