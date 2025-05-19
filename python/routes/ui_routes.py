@@ -25,7 +25,6 @@ def new_appointment():
         query_db("
             INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)VALUES (?, ?, ?, ?, ?, ?, ?)"
      ,
-            query,
             (user_id, title, appointment_date, appointment_time, location, description, 'Pending'),
             commit=True
         )
