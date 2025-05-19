@@ -32,7 +32,7 @@ def new_appointment():
             commit=True
         )
         flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
-        return redirect(url_for('ui.today_appointment'))
+        return redirect(url_for('ui.list'))
 
     return render_template('Add_New_Appointment.html')
 
@@ -42,7 +42,7 @@ def history_appointments():
 
     if not user_id:
         flash('You must be logged in to view your appointments.', 'danger')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('login.login'))
 
     # Fetch all past appointments for the logged-in user
     query = """
@@ -51,7 +51,7 @@ def history_appointments():
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
-    print("History Appointments:", appointments)  # Debug statement
+    print("Appointments List:", appointments)  # Debug statement
 
     return render_template('list.html', appointments=appointments)
 
