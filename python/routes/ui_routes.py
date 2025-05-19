@@ -6,12 +6,12 @@ ui_bp = Blueprint('ui', __name__)
 @ui_bp.route('/new-appointment', methods=['GET', 'POST'])
 def new_appointment():
     if request.method == 'POST':
-        user_id = session.get('user_id')  # Get logged-in user's ID
+        user_id = session.get('user_id')
         title = request.form.get('title')
         appointment_date = request.form.get('appointment_date')
         appointment_time = request.form.get('appointment_time')
-        description = request.form.get('description')
         location = request.form.get('location')
+        description = request.form.get('description')
 
         if not user_id:
             flash('You must be logged in to add an appointment.', 'danger')
@@ -19,11 +19,11 @@ def new_appointment():
 
         if not title:
             flash('Title is required to add an appointment.', 'danger')
-            return redirect(url_for('ui.add_new_appointment'))
+            return redirect(url_for('ui.new_appointment'))
 
-        # Insert into database
+        # Insert into Azure SQL Database using ? placeholders
         query = """
-            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
+            INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         query_db(
@@ -38,21 +38,18 @@ def new_appointment():
 
 @ui_bp.route('/appointment-list')
 def history_appointments():
-    user_id = session.get('user_id')  # Ensure the user is logged in
-
+    user_id = session.get('user_id')
     if not user_id:
         flash('You must be logged in to view your appointments.', 'danger')
         return redirect(url_for('login.login'))
 
-    # Fetch all past appointments for the logged-in user
+    # Fetch all appointments for the logged-in user
     query = """
-        SELECT * FROM Appointments
-        WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
+        SELECT * FROM dbo.Appointments
+        WHERE user_id = ? 
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
-    print("Appointments List:", appointments)  # Debug statement
-
     return render_template('list.html', appointments=appointments)
 
 @ui_bp.route('/main-dashboard')
