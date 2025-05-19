@@ -22,9 +22,12 @@ def new_appointment():
             return redirect(url_for('ui.new_appointment'))
 
         # Insert into database
-        query_db("
-            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)VALUES (?, ?, ?, ?, ?, ?, ?)"
-     ,
+        query = """
+            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """
+        query_db(
+            query,
             (user_id, title, appointment_date, appointment_time, location, description, 'Pending'),
             commit=True
         )
@@ -43,12 +46,12 @@ def list_appointment():
 
     # Fetch all past appointments for the logged-in user
     query = """
-        SELECT * FROM Appointments
+        SELECT * FROM dbo.Appointments
         WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
-    print("Appointments List:", appointments)  # Debug statement
+    print("Appointments List:", dbo.appointments)  # Debug statement
 
     return render_template('list.html', appointments=appointments)
 
