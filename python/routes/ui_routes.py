@@ -36,26 +36,7 @@ def new_appointment():
 
     return render_template('Add_New_Appointment.html')
 
-@ui_bp.route('/appointment-list')
-def today_appointment():
-    user_id = session.get('user_id')  # Ensure the user is logged in
-
-    if not user_id:
-        flash('You must be logged in to view your appointments.', 'danger')
-        return redirect(url_for('auth.login'))
-
-    # Fetch today's appointments for the logged-in user
-    query = """
-        SELECT * FROM dbo.Appointments
-        WHERE user_id = ? AND appointment_date = CAST(GETDATE() AS DATE)
-        ORDER BY appointment_time ASC
-    """
-    appointments = query_db(query, (user_id,))
-    print("Today's Appointments:", appointments)  # Debug statement
-
-    return render_template('Today_Appointment.html', appointments=appointments)
-
-@ui_bp.route('/history-appointments')
+@ui_bp.route('/appointments-list')
 def history_appointments():
     user_id = session.get('user_id')  # Ensure the user is logged in
 
@@ -72,7 +53,7 @@ def history_appointments():
     appointments = query_db(query, (user_id,))
     print("History Appointments:", appointments)  # Debug statement
 
-    return render_template('AS_HistoryAppointment.html', appointments=appointments)
+    return render_template('list.html', appointments=appointments)
 
 @ui_bp.route('/main-dashboard')
 def main_dashboard():
