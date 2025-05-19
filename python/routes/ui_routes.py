@@ -46,12 +46,12 @@ def list_appointment():
 
     # Fetch all past appointments for the logged-in user
     query = """
-        SELECT * FROM dbo.Appointments
+        SELECT * FROM Appointments
         WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
-    print("Appointments List:", dbo.appointments)  # Debug statement
+    print("Appointments List:", appointments)  # Debug statement
 
     return render_template('list.html', appointments=appointments)
 
