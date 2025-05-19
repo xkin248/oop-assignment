@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Appointments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-2xl mt-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Today's Appointments</h1>
+
+        {% if appointments %}
+            {% for appointment in appointments %}
+                <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800">{{ appointment.description }}</h2>
+                    <p class="text-gray-600 mt-2"><strong>Date:</strong> {{ appointment.appointment_date }}</p>
+                    <p class="text-gray-600"><strong>Time:</strong> {{ appointment.appointment_time }}</p>
+                    <p class="text-gray-600"><strong>Location:</strong> {{ appointment.location }}</p>
+                    <p class="text-gray-600"><strong>Status:</strong> 
+                        <span class="font-semibold {% if appointment.status == 'Pending' %}text-yellow-500{% else %}text-green-500{% endif %}">
+                            {{ appointment.status }}
+                        </span>
+                    </p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-gray-500">No appointments for today.</p>
+        {% endif %}
+
+        <!-- Button to navigate to history appointments -->
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('ui.history_appointments') }}" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                View Appointment History
+            </a>
+        </div>
+    </div>
+</body>
+</html>
