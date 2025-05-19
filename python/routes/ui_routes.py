@@ -47,6 +47,7 @@ def list_appointment():
     # Fetch all appointments for all users, both past and future
     query = """
         SELECT * FROM dbo.Appointments
+        WHERE user_id = ?
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query)
