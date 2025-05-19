@@ -23,9 +23,7 @@ def new_appointment():
 
         # Insert into database
         query_db("
-            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        "
+            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)VALUES (?, ?, ?, ?, ?, ?, ?)"
      ,
             query,
             (user_id, title, appointment_date, appointment_time, location, description, 'Pending'),
