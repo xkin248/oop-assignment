@@ -81,7 +81,3 @@ def main_dashboard():
 @ui_bp.route('/profile-create')
 def profile_create():
     return render_template('profile_create.html')
-
-@ui_bp.route('/logout')
-def logout():
-    return render_template('Logout.html')
