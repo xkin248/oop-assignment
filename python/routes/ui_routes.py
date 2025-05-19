@@ -83,6 +83,5 @@ def profile_create():
     return render_template('profile_create.html')
 
 @ui_bp.route('/logout')
-def profile_create():
+def logout():
     return render_template('Logout.html')
-
