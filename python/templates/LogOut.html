@@ -19,12 +19,9 @@
                     Log Out
                 </button>
             </form>
-            <button 
-                class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-                onclick="history.back();"
-            >
+            <a href="{{ url_for('ui.logout_confirm') }}" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
                 Cancel
-            </button>
+            </a>
         </div>
     </div>
 </body>

@@ -1,9 +1,8 @@
-from flask import Blueprint, session, flash, redirect, url_for
+from flask import Blueprint, session, redirect, url_for
 
-logout_bp = Blueprint('logout', __name__)
+logout_bp = Blueprint('logout_bp', __name__)
 
-@logout_bp.route('/logout')
+@logout_bp.route('/logout', methods=['POST'])
 def logout():
-    session.pop('user_id', None)
-    flash('You have been logged out.', 'success')
+    session.clear()
     return redirect(url_for('login.login'))
