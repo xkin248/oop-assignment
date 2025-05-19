@@ -51,7 +51,7 @@ def list_appointment():
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
-    print("Appointments List:", dbo.appointments)  # Debug statement
+    print("Appointments List:", appointments)  # Debug statement
 
     return render_template('list.html', appointments=appointments)
 
