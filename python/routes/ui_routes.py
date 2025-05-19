@@ -44,17 +44,15 @@ def list_appointment():
         flash('You must be logged in to view your appointments.', 'danger')
         return redirect(url_for('login.login'))
 
-    # Fetch all past appointments for the logged-in user
-    query = """
-        SELECT * FROM dbo.Appointments
-        WHERE user_id = ?
-        ORDER BY appointment_date DESC, appointment_time DESC
-    """
-    appointments = query_db(query, (user_id,))
+    # Fetch all appointments for all users, both past and future
+    query = """
+        SELECT * FROM dbo.Appointments
+        ORDER BY appointment_date DESC, appointment_time DESC
+    """
+    appointments = query_db(query)
     print("Appointments List:", appointments)  # Debug statement
 
     return render_template('list.html', appointments=appointments)
-
 
 @ui_bp.route('/main-dashboard')
 def main_dashboard():
