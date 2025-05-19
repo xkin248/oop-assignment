@@ -9,7 +9,7 @@ def new_appointment():
         user_id = session.get('user_id')  # Get logged-in user's ID
         title = request.form.get('title')
         appointment_date = request.form.get('appointment_date')
-        appointment_time = request.form.get('appointment_time')r
+        appointment_time = request.form.get('appointment_time')
         description = request.form.get('description')
         location = request.form.get('location')
 
