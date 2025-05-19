@@ -47,7 +47,7 @@ def list_appointment():
     # Fetch all past appointments for the logged-in user
     query = """
         SELECT * FROM dbo.Appointments
-        WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
+        WHERE user_id = ? AND appointment_date > CAST(GETDATE() AS DATE)
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
