@@ -32,7 +32,7 @@ def new_appointment():
             commit=True
         )
         flash('Appointment added successfully! Redirecting to Appointment List.', 'success')
-        return redirect(url_for('ui.list'))
+        return redirect(url_for('ui.history_appointments'))
 
     return render_template('Add_New_Appointment.html')
 
