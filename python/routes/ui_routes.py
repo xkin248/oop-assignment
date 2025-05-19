@@ -22,10 +22,10 @@ def new_appointment():
             return redirect(url_for('ui.new_appointment'))
 
         # Insert into database
-        query = """
+        query = "
             INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        """
+        "
         query_db(
             query,
             (user_id, title, appointment_date, appointment_time, location, description, 'Pending'),
