@@ -21,7 +21,6 @@ def new_appointment():
             flash('Title is required to add an appointment.', 'danger')
             return redirect(url_for('ui.new_appointment'))
 
-        # Insert into Azure SQL Database using ? placeholders
         query = """
             INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -43,7 +42,6 @@ def history_appointments():
         flash('You must be logged in to view your appointments.', 'danger')
         return redirect(url_for('login.login'))
 
-    # Fetch all appointments for the logged-in user
     query = """
         SELECT * FROM dbo.Appointments
         WHERE user_id = ? 
