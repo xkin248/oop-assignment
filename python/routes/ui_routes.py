@@ -23,7 +23,7 @@ def new_appointment():
 
         # Insert into database
         query = """
-            INSERT INTO Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
+            INSERT INTO dbo.Appointments (user_id, title, appointment_date, appointment_time, location, description, status)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         query_db(
@@ -46,12 +46,12 @@ def list_appointment():
 
     # Fetch all past appointments for the logged-in user
     query = """
-        SELECT * FROM Appointments
+        SELECT * FROM dbo.Appointments
         WHERE user_id = ? AND appointment_date < CAST(GETDATE() AS DATE)
         ORDER BY appointment_date DESC, appointment_time DESC
     """
     appointments = query_db(query, (user_id,))
-    print("Appointments Lisst:", appointments)  # Debug statement
+    print("Appointments List:", dbo.appointments)  # Debug statement
 
     return render_template('list.html', appointments=appointments)
 
