@@ -19,7 +19,7 @@ def new_appointment():
 
         if not title:
             flash('Title is required to add an appointment.', 'danger')
-            return redirect(url_for('ui.new_appointment'))
+            return redirect(url_for('ui.add_new_appointment'))
 
         # Insert into database
         query = """
