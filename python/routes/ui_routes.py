@@ -45,11 +45,11 @@ def list_appointment():
         return redirect(url_for('login.login'))
 
     # Fetch all past appointments for the logged-in user
-    query = """
-        SELECT * FROM dbo.Appointments
-        WHERE user_id = ? AND appointment_date > CAST(GETDATE() AS DATE)
-        ORDER BY appointment_date DESC, appointment_time DESC
-    """
+    query = """
+        SELECT * FROM dbo.Appointments
+        WHERE user_id = ?
+        ORDER BY appointment_date DESC, appointment_time DESC
+    """
     appointments = query_db(query, (user_id,))
     print("Appointments List:", appointments)  # Debug statement
 
