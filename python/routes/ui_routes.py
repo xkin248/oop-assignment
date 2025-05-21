@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from utils.db import query_db
+from routes.demo import Appointment, OnlineAppointment
 
 ui_bp = Blueprint('ui', __name__)
 
@@ -64,3 +65,14 @@ def logout():
     session.clear()
     flash('You have been logged out.', 'success')
     return redirect(url_for('login.login'))
+
+@ui_bp.route('/oop-demo')
+def oop_demo():
+    try:
+        appt1 = Appointment("Dentist Visit", "2025-05-21", "10:00", "Clinic", "Routine checkup")
+        appt2 = OnlineAppointment("Team Meeting", "2025-05-22", "14:00", "Home", "Monthly sync", "https://meet.link")
+        appointments = [appt1, appt2]
+        details = [a.get_details() for a in appointments]
+        return "<br>".join(details)
+    except Exception as e:
+        return f"Error: {e}"
